@@ -7,6 +7,9 @@ import static javax.swing.JOptionPane.showConfirmDialog;
 import static javax.swing.JOptionPane.showInputDialog;
 import static javax.swing.JOptionPane.showMessageDialog;
 
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -16,7 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Color;
-
+import java.awt.Component;
 
 import javax.swing.JButton;
 import java.awt.Dialog.ModalExclusionType;
@@ -24,7 +27,6 @@ import java.awt.SystemColor;
 import javax.swing.border.LineBorder;
 
 import controller.Not21ViewControl;
-import model.JogadaN21;
 import model.Jogador;
 import model.Mesa;
 import net.AtorNetGames;
@@ -38,14 +40,13 @@ public class InterfaceNot21 extends JFrame {
 	
 	AtorNetGames atorRede;
 	Mesa mesa;
-	
-	private String nome = "";
 	private Not21ViewControl controle;
+	private String nome = "";
+
 	private JPanel contentPane;
 	
 	public static final int INFORMACAO = INFORMATION_MESSAGE;
 	public static final String TITULO_JANELA = "NOT21";
-	private static boolean JOGO_EM_REDE = false;
 	/**
 	 * Launch the application.
 	 */
@@ -55,6 +56,9 @@ public class InterfaceNot21 extends JFrame {
 	 * Create the frame.
 	 */
 	public InterfaceNot21() {
+		
+		atorRede =  new AtorNetGames(controle, this);
+		
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(70, 25, 1131, 700);
@@ -85,7 +89,6 @@ public class InterfaceNot21 extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				InterfaceNot21.this.atorRede.desconectar();
-				confirmaSaida();
 			}
 		});
 		btnDesconectar.setHorizontalAlignment(SwingConstants.CENTER);
@@ -198,7 +201,7 @@ public class InterfaceNot21 extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				nome = JOptionPane.showInputDialog(null, "Escolha o nome do participante");
 				atorRede.conectar(nome, "localhost");
-				InterfaceNot21.this.atorRede.iniciarPartidaRede();
+				//InterfaceNot21.this.atorRede.iniciarPartidaRede();
 				
 			}
 		});
@@ -212,8 +215,7 @@ public class InterfaceNot21 extends JFrame {
 		lblIniciar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				controle.novoJogo();
-				controle.iniciarPartidaRede(2);
+				
 			}
 		});
 		lblIniciar.setForeground(Color.WHITE);
@@ -235,10 +237,6 @@ public class InterfaceNot21 extends JFrame {
 		JButton btnNovaMao = new JButton("Nova M\u00E3o");
 		btnNovaMao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(JOGO_EM_REDE)
-					enviaJogadaRede(JogadaN21.PEDIR);
-				
-					controle.procederLance(JogadaN21.PEDIR);
 				
 			}
 		});
@@ -251,13 +249,13 @@ public class InterfaceNot21 extends JFrame {
 		btnParar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				if(JOGO_EM_REDE)
-					enviaJogadaRede(JogadaN21.PARAR);
-				
-				controle.procederLance(JogadaN21.PARAR);
 			}
 		});
-		
+		btnParar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
 		btnParar.setBounds(451, 348, 199, 23);
 		contentPane.add(btnParar);
 		btnParar.setBackground(SystemColor.text);
@@ -279,6 +277,20 @@ public class InterfaceNot21 extends JFrame {
 	}
 
 	
+
+	
+
+	public void receberMensagemRede(String mensagem) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void mostraMensagemTela(String msg) {
+		//this.lblMsgTela.setText(msg);
+		
+	}
+	
 	public void mostraMensagem(String msg){
 		this.mostraMensagem(msg,INFORMACAO);
 	}
@@ -291,8 +303,13 @@ public class InterfaceNot21 extends JFrame {
 		return showInputDialog(this,"Digite o nome do jogador "+numero+": ",TITULO_JANELA,QUESTION_MESSAGE);
 	}
 
-	public void criar(Jogador jogador) {
+	public void atualizaMaoJogadores() {
+		// TODO Auto-generated method stub
 		
+	}
+
+	public void criar(Jogador jogador) {
+		// TODO Auto-generated method stub
 		
 	}
 	
@@ -311,15 +328,41 @@ public class InterfaceNot21 extends JFrame {
 	public void desconectar(){
 		this.controle.desconectar();
 	}
+	public void sincronizaMesa(Mesa mesa){
+		
+		for(Jogador jogador : mesa.getJogadores()){
+			adicionaJogador(jogador);
+		}
+		
+		System.gc();
+		habilitaDesabilitaBotoes();
+	}
+	
+	private void adicionaJogador(Jogador jogador) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	
-	public void enviaJogadaRede(JogadaN21 jogada){
+	public void enviaJogadaRede(String jogada){
 		this.controle.enviaJogadaRede(jogada);
 	}
 	
 	public void mostraRegras(){
 		String regras = 
-			":::::::::::::::::::::::::::::Not 21:::::::::::::::::::::::::::::\n";
+			":::::::::::::::::::::::::::::Not 21:::::::::::::::::::::::::::::\n"+
+			"Este jogo é uma versão simplificada do jogo Blackjack (ou 21).\n" +
+			"O objetivo do jogo, é conseguir a pontuação mais alta, que todos,\n" +
+			"porém, inferior a 21. Caso o jogador ultrapasse 21 pontos, ele\n" +
+			"estará fora! Existem 2 tipos de combinações que valem mais que 21 pontos.\n" +
+			"-Blackjack:\n" +
+			"  O jogador possui apenas 1 Ás preto e 1 Valete preto.\n" +
+			"-Cinco Cartas Charlie:\n" +
+			"  O jogador possui cinco cartas na mão, mas sem ultrapassar 21 pontos.\n\n" +
+			"Pontuação das Cartas:\n" +
+			"-ÁS: 1 ou 11 (o que melhor for para o jogador).\n" +
+			"-Cartas de 1 a 10, valem o próprio número.\n" +
+			"-Rei, Dama e Valete valem 10 pontos.";
 		mostraMensagem(regras);
 	}
 }

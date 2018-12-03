@@ -11,10 +11,16 @@ import br.ufsc.inf.leobr.cliente.exception.NaoConectadoException;
 import br.ufsc.inf.leobr.cliente.exception.NaoJogandoException;
 import br.ufsc.inf.leobr.cliente.exception.NaoPossivelConectarException;
 import controller.Not21Control;
+import controller.Not21ViewControl;
 import model.JogadaN21;
 import view.InterfaceNot21;
 
 public class AtorNetGames implements OuvidorProxy {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private InterfaceNot21 atorJogador;
 	
@@ -22,14 +28,14 @@ public class AtorNetGames implements OuvidorProxy {
 	
 	private boolean ehMinhaVez = false;
 	
-	private Not21Control control;
+	private Not21ViewControl control;
 	
 	private String nickJogador;
 	
-	public AtorNetGames(Not21Control control, InterfaceNot21 atorJogador) {
+	public AtorNetGames(Not21ViewControl controle, InterfaceNot21 atorJogador) {
 		super();
 		this.atorJogador = atorJogador;
-		this.control = control;
+		this.control = controle;
 		proxy = Proxy.getInstance();
 		proxy.addOuvinte(this);
 	}
@@ -117,7 +123,7 @@ public class AtorNetGames implements OuvidorProxy {
 
 	@Override
 	public void receberJogada(Jogada jogada) {
-		if(jogada instanceof JogadaN21){
+		/*if(jogada instanceof JogadaN21){
 			JogadaN21 jbj = (JogadaN21)jogada;
 			this.control.procederJogada(jbj);
 			if(jbj.equals(JogadaN21.PARAR)){
@@ -130,7 +136,7 @@ public class AtorNetGames implements OuvidorProxy {
 		}else if(jogada instanceof Mensagem){
 			Mensagem msg = (Mensagem)jogada;
 			this.control.mostraMensagem(msg.getMensagem());
-		}
+		}*/
 
 	}
 	

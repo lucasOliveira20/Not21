@@ -20,7 +20,7 @@ public class Not21Control {
 
 	public Not21Control() {
 		this.viewControl = new Not21ViewControl(this);
-		this.atorRede = new AtorNetGames(this,this.viewControl.getView());
+		//this.atorRede = new AtorNetGames(this,this.viewControl.getView());
 		this.mesa = new Mesa();
 	}
 	
@@ -67,7 +67,7 @@ public class Not21Control {
 		}
 		
 		this.mesa.distribuiCartas();
-
+		this.viewControl.atualizaMaoJogadores();
 		procederJogada(null);
 	}
 	
@@ -88,11 +88,11 @@ public class Not21Control {
 			if (jogada.equals(JogadaN21.PEDIR)) {
 				jogadorAtual.getCartaDoBaralho();
 				
-
+				this.viewControl.atualizaMaoJogadores();
 				if(jogadorAtual.isParado()){
 					try {
 						this.verificaVez();
-						
+						this.sincronizaMesa();
 						this.habilitaDesabilitaBotoes();
 					} catch (Exception e) {
 						mostraMensagem(e.getMessage());
@@ -104,7 +104,7 @@ public class Not21Control {
 				else if (jogada.equals(JogadaN21.PARAR)) {
 
 					try {
-						jogadorAtual.setParado();
+						
 						mostraMensagemTela(String.format("É a vez de %s!",this.mesa.getJogadorAtual()));
 					} catch (Exception e) {
 						mostraMensagem(e.getMessage());
@@ -142,21 +142,26 @@ public class Not21Control {
 			mostraMensagem("Aguardando outro jogador");
 		String nomeAdversario = atorRede.obterNomeAdversario();
 
-		Jogador jogador2 = new Jogador(nomeAdversario,2,this.mesa);
-		this.mesa.criarJogador(jogador2);
-		this.viewControl.adicionaJogador(jogador2);
+		Jogador adversario = new Jogador(nomeAdversario,2,this.mesa);
+		this.mesa.criarJogador(adversario);
+		this.viewControl.adicionaJogador(adversario);
 
 		this.mesa.distribuiCartas();
 		this.procederJogada(null);
 		this.atorRede.iniciarPartidaRede();
 	}
 	
+	public void sincronizaMesa(){
+		this.viewControl.sincronizaMesa();
+		this.viewControl.atualizaMaoJogadores();
+	}
+
 
 	public void desconectar() {
 		this.atorRede.desconectar();
 	}
 
-	public void enviaJogadaRede(JogadaN21 jogada) {
+	public void enviaJogadaRede(String jogada) {
 		this.atorRede.enviarJogada(jogada);
 	}
 	public void habilitaDesabilitaBotoes(){
