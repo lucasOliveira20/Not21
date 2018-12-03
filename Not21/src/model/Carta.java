@@ -36,13 +36,13 @@ public class Carta {
 	   }
 
 
-	   public int hashCode() {
+	  /* public int hashCode() {
 	      final int prime = 31;
 	      int result = 1;
 	      result = prime * result + ((this.idCarta == null) ? 0 : this.idCarta.hashCode());
 	      result = prime * result + ((this.idNipe == null) ? 0 : this.idNipe.hashCode());
 	      return result;
-	   }
+	   } */
 
 	   public boolean equals(Object obj) {
 	      if (this == obj)

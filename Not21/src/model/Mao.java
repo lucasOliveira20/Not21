@@ -2,30 +2,33 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
-;
 
 public class Mao {
 	
-	private List<Carta> cartas;
+	protected Carta[] cartas;
+	private int posCarta=0;
 	
 	public Mao(){
-		this.cartas = new ArrayList<Carta>();
+		this.cartas = new Carta[3];
 	}
 	
 	public void adicionaCarta(Carta carta){
-		this.cartas.add(carta);
-	}
-	
-	public Carta removeCarta(Carta carta){
-		return this.cartas.remove(this.cartas.indexOf(carta));
-	}
-	
-	public List<Carta> getCartas(){
-		return this.cartas;
+		this.cartas[posCarta] = carta;
+		posCarta++;
+		posCarta = posCarta % 3;
 	}
 	
 	public void limpar() {
-	   this.cartas.clear();
+		for(int i =0;i<3;i++) {
+			   cartas[i] =null;
+		}
+	}
+	
+	public int calculaValorMao() {
+		Carta primeira = cartas[0];
+		Carta segunda = cartas[1];
+		Carta terceira = cartas[2];
+		return primeira.getValor() + segunda.getValor() - terceira.getValor();
 	}
 
 }
