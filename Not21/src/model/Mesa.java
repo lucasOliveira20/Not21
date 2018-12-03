@@ -112,6 +112,19 @@ public class Mesa {
  			   
  	   
     }
+    
+    public boolean condicaoVitoria() {
+  	  int pJ1 = jogadores.get(0).getPediu();
+  	  boolean j1Parado = jogadores.get(0).isParado();
+  	  int pJ2 = jogadores.get(1).getPediu();
+  	  boolean j2Parado = jogadores.get(1).isParado();
+  	  if (pJ1 >= 5 && pJ2 >= 5 || pJ1 >= 5 && j2Parado == true || j1Parado == true && pJ2 >= 5 || j1Parado == true && j2Parado == true) {
+  		  avaliaVencedor(jogadores);
+  		  return true;
+  	  }else {
+  		  return false;
+  	  }
+     }
 
 	public void limpaJogadores() {
 		// TODO Auto-generated method stub

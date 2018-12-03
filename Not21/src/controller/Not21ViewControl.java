@@ -36,11 +36,7 @@ public class Not21ViewControl {
    public void adicionaJogador(Jogador jogador){
 	   this.view.criar(jogador);
    }
-   
-   public void atualizaMaoJogadores(){
-	   this.view.atualizaMaoJogadores();
-   }
-   
+
    public void sair(){
 	   this.control.sair();
    }
@@ -50,7 +46,7 @@ public class Not21ViewControl {
    }
 
    public void mostraMensagem(String msg) {
-      this.view.mostraMensagemTela(msg);
+      this.view.mostraMensagem(msg);
    }
 	   
 	public void novoJogo() {
@@ -60,7 +56,7 @@ public class Not21ViewControl {
 		this.control.procederJogada(jogada);
 	}
 	public void mostraMensagemTela(String msg){
-		this.view.mostraMensagemTela(msg);
+		this.view.mostraMensagem(msg);
 	}
 
 	public void conectar(String nick, String servidor) {
@@ -75,15 +71,11 @@ public class Not21ViewControl {
 		return this.control.ehMinhaVez();
 	}
 	
-	public void sincronizaMesa(){
-		this.view.sincronizaMesa(this.control.getMesa());
-	}
-
 	public void desconectar() {
 		this.control.desconectar();
 	}
 
-	public void enviaJogadaRede(String jogada) {
+	public void enviaJogadaRede(JogadaN21 jogada) {
 		this.control.enviaJogadaRede(jogada);
 	}
 
