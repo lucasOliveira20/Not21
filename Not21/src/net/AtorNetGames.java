@@ -18,9 +18,6 @@ import view.InterfaceNot21;
 
 public class AtorNetGames implements OuvidorProxy {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private InterfaceNot21 atorJogador;
@@ -98,6 +95,7 @@ public class AtorNetGames implements OuvidorProxy {
 		try {
 			proxy.enviaJogada(msg);
 			ehMinhaVez = false;
+			JOptionPane.showMessageDialog(null, "Jogada Enviada!");
 		} catch (NaoJogandoException e) {
 			JOptionPane.showMessageDialog(atorJogador, e.getMessage());
 			e.printStackTrace();
@@ -108,16 +106,19 @@ public class AtorNetGames implements OuvidorProxy {
 		
 		try {
 			proxy.enviaJogada(jogada);
+			JOptionPane.showMessageDialog(null, "Jogada Enviada!");
 		} catch (NaoJogandoException e) {
-			JOptionPane.showMessageDialog(atorJogador, e.getMessage());
+			JOptionPane.showMessageDialog(atorJogador, "ERRO: " + e.getMessage());
 			e.printStackTrace();
 		}
 		
 		if(jogada instanceof JogadaN21){
 			JogadaN21 jbj = (JogadaN21)jogada;
 			if(jbj.equals(JogadaN21.PARAR)){
-				ehMinhaVez = false;
-				this.control.habilitaDesabilitaBotoes();
+				JOptionPane.showMessageDialog(null, "Jogada Enviada!");
+			}
+			if(jbj.equals(JogadaN21.PEDIR)){
+				JOptionPane.showMessageDialog(null, "Jogada Enviada!");
 			}
 		}
 	}
@@ -131,6 +132,10 @@ public class AtorNetGames implements OuvidorProxy {
 				if(nickJogador.equals(this.control.getMesa().getJogadorAtual().getNome())){
 					ehMinhaVez = true;
 					this.control.habilitaDesabilitaBotoes();
+					JOptionPane.showMessageDialog(null, "Jogada Recebida!");
+				}
+				if(jbj.equals(JogadaN21.PEDIR)){
+					
 				}
 				
 			}
@@ -143,7 +148,12 @@ public class AtorNetGames implements OuvidorProxy {
 	
 	public void desconectar() {
 		try {
-			proxy.desconectar();
+
+			int resp = JOptionPane.showConfirmDialog(null, "Deseja desconectar da partida?", "NOT 21", JOptionPane.YES_NO_OPTION);
+		        if (resp == JOptionPane.YES_OPTION) {
+		        	proxy.desconectar();
+		        }
+			
 		} catch (NaoConectadoException e) {
 			JOptionPane.showMessageDialog(atorJogador, e.getMessage());
 			e.printStackTrace();

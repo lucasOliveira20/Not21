@@ -5,9 +5,6 @@ import java.util.List;
 
 public class Jogador implements Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5836112280495926118L;
 
 	protected String nome;
@@ -32,8 +29,6 @@ public class Jogador implements Serializable{
 		this.nRodads = nRodads;
 	}
 
-	
-
 	public Jogador(String nome, int numero, Mesa mesa) {
 		this.nome = nome;
 		this.numero = numero;
@@ -49,10 +44,6 @@ public class Jogador implements Serializable{
 		return String.format("%s pega a carta %s!", this.nome, carta);
 	}
 
-	public int getValorDaMao() {
-		return mao.calculaValorMao();
-	}
-
 	public void limparMao() {
 		this.mao.limpar();
 	}
@@ -63,6 +54,10 @@ public class Jogador implements Serializable{
 
 	public void setParado() {
 		this.parado = true;
+	}
+	
+	public void setAtivo() {
+		this.parado = false;
 	}
 
 	public boolean isParado() {
@@ -111,6 +106,29 @@ public class Jogador implements Serializable{
 	 	return pediu;
 	 }
 	 
-	
+	 public int getValorDaMao() {
+		int i = 0;
+		int diminui = 0;
+		int soma = 0;
+		int valor = 0;
+		for (Carta carta : this.mao.getCartas()) {
+			i++;
+			if (i % 3 == 0) {
+				diminui = diminui + carta.getValor();
+				System.out.println("uma carta para diminuir");
+			} else {
+				soma = soma + carta.getValor();
+				System.out.println("uma carta para somar");
+			}
+
+		}
+		valor = soma - diminui;
+		if (valor < 0) {
+			valor = 0;
+		}
+
+		return valor;
+	}
+	 	
 }
 

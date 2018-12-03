@@ -94,7 +94,7 @@ public class InterfaceNot21 extends JFrame {
 		btnDesconectar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				InterfaceNot21.this.atorRede.desconectar();
+				desconectar();
 			}
 		});
 		btnDesconectar.setHorizontalAlignment(SwingConstants.CENTER);

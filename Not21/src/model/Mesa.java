@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 public class Mesa implements Serializable {
 	   
 	/**
@@ -24,6 +26,7 @@ public class Mesa implements Serializable {
 	  this.jogadores = new ArrayList<Jogador>();
       this.baralho = new Baralho();
       this.baralho.embaralhar();
+      this.vencedor = null;
       
    }
    
@@ -88,45 +91,75 @@ public class Mesa implements Serializable {
 	   this.vencedor = j;
     }
     
-    public void avaliaVencedor(List<Jogador> jogadores){
- 	   int j1 = jogadores.get(1).distanciaMult();
- 	   int j2 =	jogadores.get(2).distanciaMult();
- 	   
- 	   if ( j1 != 0 && j2 != 0 ) {
- 		   
- 		      if ( j1 < j2 ) {
- 			      setVencedor(jogadores.get(1));
- 		      } else if (j1 == j2) {
- 			       if( jogadores.get(1).getValorDaMao() > jogadores.get(2).getValorDaMao() ){
- 			     	   setVencedor(jogadores.get(1));
- 			       } else {
- 				   setVencedor(jogadores.get(2));
- 			       }
-   		      } else {
- 			   setVencedor(jogadores.get(2));
-   		      } 
- 	    
- 	   
- 	   }else if (j1 == 0 && j2 != 0) {
- 		   setVencedor(jogadores.get(2));
- 		   
- 	   } else if (j1 !=0 && j2 ==0) {
- 		   setVencedor(jogadores.get(1));
- 		   
-    	   }else {
-    		   System.out.println("Algo deu errado");
- 	   }
- 			   
- 	   
-    }
+	public void avaliaVencedor(List<Jogador> jogadores) {
+		int j1 = jogadores.get(0).distanciaMult();
+		int j2 = jogadores.get(1).distanciaMult();
+
+		if (j1 != 0 && j2 != 0) {
+
+			if (j1 < j2) {
+				setVencedor(jogadores.get(0));
+				JOptionPane.showMessageDialog(null, String.format("O 2%d ganhou", jogadores.get(0).getNome()));
+			} else if (j1 == j2) {
+				if (jogadores.get(0).getValorDaMao() > jogadores.get(1).getValorDaMao()) {
+					setVencedor(jogadores.get(0));
+					JOptionPane.showMessageDialog(null, String.format("O 2%d ganhou", jogadores.get(0).getNome()));
+				} else {
+					setVencedor(jogadores.get(1));
+					JOptionPane.showMessageDialog(null, String.format("O 2%d ganhou", jogadores.get(1).getNome()));
+				}
+			} else {
+				setVencedor(jogadores.get(1));
+				JOptionPane.showMessageDialog(null, String.format("O 2%d ganhou", jogadores.get(1).getNome()));
+			}
+
+		} else if (j1 == 0 && j2 != 0) {
+			setVencedor(jogadores.get(1));
+			JOptionPane.showMessageDialog(null, String.format("O 2%d ganhou", jogadores.get(1).getNome()));
+		} else if (j1 != 0 && j2 == 0) {
+			setVencedor(jogadores.get(0));
+			JOptionPane.showMessageDialog(null, String.format("O 2%d ganhou", jogadores.get(0).getNome()));
+
+		} else {
+			JOptionPane.showMessageDialog(null, "Algo deu errado");
+		}
+	}
+
+	public boolean condicaoVitoria() {
+		int pJ1 = jogadores.get(0).getPediu();
+		boolean j1Parado = jogadores.get(0).isParado();
+		int pJ2 = jogadores.get(1).getPediu();
+		boolean j2Parado = jogadores.get(1).isParado();
+		if (pJ1 >= 5 && pJ2 >= 5 || pJ1 >= 5 && j2Parado == true || j1Parado == true && pJ2 >= 5
+				|| j1Parado == true && j2Parado == true) {
+			avaliaVencedor(jogadores);
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public int getNumeroJogadoresAtivos() {
+		int cont = 0;
+		for (Jogador player : jogadores) {
+			if (!player.isParado())
+				cont++;
+		}
+		return cont;
+	}
+	
+	public void setTodosJogadoresAtivos() {
+
+		for (Jogador j : this.jogadores) {
+			j.setAtivo();
+		}
+	}
 
 	public void limpaJogadores() {
-		// TODO Auto-generated method stub
-		
+		this.jogadores.clear();		
 	}
 
 	public String mostraGanhador() {
-		// TODO Auto-generated method stub
-		return null;
+		return getVencedor().getNome();
 	}	   
 }
