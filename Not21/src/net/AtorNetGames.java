@@ -1,5 +1,7 @@
 package net;
 
+import java.util.List;
+
 import javax.swing.JOptionPane;
 
 import br.ufsc.inf.leobr.cliente.Jogada;
@@ -11,7 +13,6 @@ import br.ufsc.inf.leobr.cliente.exception.NaoConectadoException;
 import br.ufsc.inf.leobr.cliente.exception.NaoJogandoException;
 import br.ufsc.inf.leobr.cliente.exception.NaoPossivelConectarException;
 import controller.Not21Control;
-import controller.Not21ViewControl;
 import model.JogadaN21;
 import view.InterfaceNot21;
 
@@ -28,14 +29,14 @@ public class AtorNetGames implements OuvidorProxy {
 	
 	private boolean ehMinhaVez = false;
 	
-	private Not21ViewControl control;
+	private Not21Control control;
 	
 	private String nickJogador;
 	
-	public AtorNetGames(Not21ViewControl controle, InterfaceNot21 atorJogador) {
+	public AtorNetGames(Not21Control control, InterfaceNot21 atorJogador) {
 		super();
 		this.atorJogador = atorJogador;
-		this.control = controle;
+		this.control = control;
 		proxy = Proxy.getInstance();
 		proxy.addOuvinte(this);
 	}
@@ -58,23 +59,23 @@ public class AtorNetGames implements OuvidorProxy {
 		try {
 			proxy.conectar(servidor, nome);
 		} catch (JahConectadoException e) {
-			JOptionPane.showMessageDialog(atorJogador.getFrame(), e.getMessage());
+			JOptionPane.showMessageDialog(atorJogador, e.getMessage());
 			e.printStackTrace();
 		} catch (NaoPossivelConectarException e) {
-			JOptionPane.showMessageDialog(atorJogador.getFrame(), e.getMessage());
+			JOptionPane.showMessageDialog(atorJogador, e.getMessage());
 			e.printStackTrace();
 		} catch (ArquivoMultiplayerException e) {
-			JOptionPane.showMessageDialog(atorJogador.getFrame(), e.getMessage());
+			JOptionPane.showMessageDialog(atorJogador, e.getMessage());
 			e.printStackTrace();
 		}
 	}
 	
 	
-	public void iniciarPartidaRede() {
+	public void iniciarPartidaRede(int nrJogadores) {
 		try {
-			proxy.iniciarPartida(2);
+			proxy.iniciarPartida(nrJogadores);
 		} catch (NaoConectadoException e) {
-			JOptionPane.showMessageDialog(atorJogador.getFrame(), e.getMessage());
+			JOptionPane.showMessageDialog(atorJogador, e.getMessage());
 			e.printStackTrace();
 		}
 
@@ -98,7 +99,7 @@ public class AtorNetGames implements OuvidorProxy {
 			proxy.enviaJogada(msg);
 			ehMinhaVez = false;
 		} catch (NaoJogandoException e) {
-			JOptionPane.showMessageDialog(atorJogador.getFrame(), e.getMessage());
+			JOptionPane.showMessageDialog(atorJogador, e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -123,7 +124,7 @@ public class AtorNetGames implements OuvidorProxy {
 
 	@Override
 	public void receberJogada(Jogada jogada) {
-		/*if(jogada instanceof JogadaN21){
+		if(jogada instanceof JogadaN21){
 			JogadaN21 jbj = (JogadaN21)jogada;
 			this.control.procederJogada(jbj);
 			if(jbj.equals(JogadaN21.PARAR)){
@@ -136,7 +137,7 @@ public class AtorNetGames implements OuvidorProxy {
 		}else if(jogada instanceof Mensagem){
 			Mensagem msg = (Mensagem)jogada;
 			this.control.mostraMensagem(msg.getMensagem());
-		}*/
+		}
 
 	}
 	
@@ -144,7 +145,7 @@ public class AtorNetGames implements OuvidorProxy {
 		try {
 			proxy.desconectar();
 		} catch (NaoConectadoException e) {
-			JOptionPane.showMessageDialog(atorJogador.getFrame(), e.getMessage());
+			JOptionPane.showMessageDialog(atorJogador, e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -152,7 +153,7 @@ public class AtorNetGames implements OuvidorProxy {
 
 	@Override
 	public void finalizarPartidaComErro(String message) {
-		JOptionPane.showMessageDialog(atorJogador.getFrame(), message);
+		JOptionPane.showMessageDialog(atorJogador, message);
 
 	}
 
@@ -165,25 +166,18 @@ public class AtorNetGames implements OuvidorProxy {
 
 	@Override
 	public void tratarConexaoPerdida() {
-		JOptionPane.showMessageDialog(atorJogador.getFrame(), "A conexão com o servidor foi perdida!");
+		JOptionPane.showMessageDialog(atorJogador, "A conexão com o servidor foi perdida!");
 
 	}
 
 	@Override
 	public void tratarPartidaNaoIniciada(String message) {
-		JOptionPane.showMessageDialog(atorJogador.getFrame(), "Não foi possível iniciar a partida");
+		JOptionPane.showMessageDialog(atorJogador, "Não foi possível iniciar a partida");
 
 	}
 	
 	public String obterNomeAdversario() {
-		String nome = "";
-		if (ehMinhaVez){
-			nome = proxy.obterNomeAdversario(2);
-		}else{
-			nome = proxy.obterNomeAdversario(1);
-		}
-		
-		return nome;
+		return proxy.obterNomeAdversario(2);
 	}
 
 	public boolean ehMinhaVez() {
@@ -191,8 +185,8 @@ public class AtorNetGames implements OuvidorProxy {
 	}
 
 	public void enviaMensagem(String msg) {
-		// TODO Auto-generated method stub
-		
+		Mensagem mensagem = new Mensagem(nickJogador+" diz: "+msg);
+		enviarJogada(mensagem);
 	}
 
 

@@ -1,33 +1,44 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Mao {
+import br.ufsc.inf.leobr.cliente.Jogada;
+
+public class Mao implements Serializable {
 	
-	protected Carta[] cartas;
-	private int posCarta=0;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8863416118926452372L;
+	protected  List<Carta> cartas;
+	
 	
 	public Mao(){
-		this.cartas = new Carta[3];
+		this.cartas = new ArrayList<Carta>();
 	}
 	
 	public void adicionaCarta(Carta carta){
-		this.cartas[posCarta] = carta;
-		posCarta++;
-		posCarta = posCarta % 3;
+		this.cartas.add(carta);
+	}
+	
+	public Carta removeCarta(Carta carta){
+		return this.cartas.remove(this.cartas.indexOf(carta));
 	}
 	
 	public void limpar() {
-		for(int i =0;i<3;i++) {
-			   cartas[i] =null;
-		}
+		this.cartas.clear();
+	}
+	
+	public List<Carta> getCartas(){
+		return this.cartas;
 	}
 	
 	public int calculaValorMao() {
-		Carta primeira = cartas[0];
-		Carta segunda = cartas[1];
-		Carta terceira = cartas[2];
+		Carta primeira = cartas.get(0);
+		Carta segunda = cartas.get(1);
+		Carta terceira = cartas.get(2);
 		return primeira.getValor() + segunda.getValor() - terceira.getValor();
 	}
 

@@ -1,9 +1,15 @@
 package model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Jogador {
+public class Jogador implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5836112280495926118L;
+
 	protected String nome;
 
 	protected int numero;

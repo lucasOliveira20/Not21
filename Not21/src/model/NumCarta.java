@@ -1,6 +1,8 @@
 package model;
 
-public enum NumCarta {
+import java.io.Serializable;
+
+public enum NumCarta implements Serializable{
 	 
 	   AS(1,"1"),
 	

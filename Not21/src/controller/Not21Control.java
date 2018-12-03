@@ -3,6 +3,7 @@
  */
 package controller;
 
+
 import java.util.List;
 
 import model.JogadaN21;
@@ -20,7 +21,7 @@ public class Not21Control {
 
 	public Not21Control() {
 		this.viewControl = new Not21ViewControl(this);
-		//this.atorRede = new AtorNetGames(this,this.viewControl.getView());
+		this.atorRede = new AtorNetGames(this,this.viewControl.getView());
 		this.mesa = new Mesa();
 	}
 	
@@ -58,7 +59,7 @@ public class Not21Control {
 		this.mesa.limpaJogadores();
 		int numeroJogadores = 2;
 
-		String nome = null;//this.viewControl.getNomeDoJogador(1);
+		String nome = null;
 		for (int b = 0; b < numeroJogadores; b++) {
 			nome = this.viewControl.getNomeDoJogador(b + 1);
 			Jogador jogador = new Jogador(nome, b + 1, this.mesa);
@@ -72,11 +73,21 @@ public class Not21Control {
 	}
 	
 	
+	public void iniciaJogo() {
+		this.viewControl.mostraTelaInicial();
+	}
+
+	/**
+	 * Show the main Menu
+	 */
+	public void mostraTelaInicial() {
+		this.viewControl.mostraTelaInicial();
+	}
+	
+	
 	public void iniciarJogo(int nrJogadores){
-		this.viewControl.mostraMensagemTela("iniciando jogo");
-		
-		
-		this.atorRede.iniciarPartidaRede();
+		this.viewControl.mostraMensagemTela("iniciando jogo");	
+		this.atorRede.iniciarPartidaRede(nrJogadores);
 	}
 
 	public void procederJogada(JogadaN21 jogada) {
@@ -104,7 +115,6 @@ public class Not21Control {
 				else if (jogada.equals(JogadaN21.PARAR)) {
 
 					try {
-						
 						mostraMensagemTela(String.format("É a vez de %s!",this.mesa.getJogadorAtual()));
 					} catch (Exception e) {
 						mostraMensagem(e.getMessage());
@@ -134,21 +144,24 @@ public class Not21Control {
 
 		this.mesa.limpaJogadores();
 
-		Jogador jogador1 = new Jogador(this.atorRede.getNickJogador()+"",1,this.mesa);
-		this.mesa.criarJogador(jogador1);
-		this.viewControl.adicionaJogador(jogador1);
+		Jogador jogador = new Jogador(this.atorRede.getNickJogador(),1,this.mesa);
+		this.mesa.criarJogador(jogador);
+		this.viewControl.adicionaJogador(jogador);
 		
-		if(nrJogadores == 1)
-			mostraMensagem("Aguardando outro jogador");
-		String nomeAdversario = atorRede.obterNomeAdversario();
-
+		String nomeAdversario = null;
+		
+		nomeAdversario = atorRede.obterNomeAdversario();
+		
 		Jogador adversario = new Jogador(nomeAdversario,2,this.mesa);
 		this.mesa.criarJogador(adversario);
 		this.viewControl.adicionaJogador(adversario);
+	
 
 		this.mesa.distribuiCartas();
+		
+		this.atorRede.iniciarPartidaRede(nrJogadores);
+		
 		this.procederJogada(null);
-		this.atorRede.iniciarPartidaRede();
 	}
 	
 	public void sincronizaMesa(){

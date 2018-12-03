@@ -8,6 +8,7 @@ import static javax.swing.JOptionPane.showInputDialog;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -35,6 +36,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.Expression;
+import java.util.List;
 
 public class InterfaceNot21 extends JFrame {
 	
@@ -42,8 +45,9 @@ public class InterfaceNot21 extends JFrame {
 	Mesa mesa;
 	private Not21ViewControl controle;
 	private String nome = "";
-
+	private CardLayout thisLayout;
 	private JPanel contentPane;
+	private Jogador jogador;
 	
 	public static final int INFORMACAO = INFORMATION_MESSAGE;
 	public static final String TITULO_JANELA = "NOT21";
@@ -55,9 +59,11 @@ public class InterfaceNot21 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InterfaceNot21() {
-		
-		atorRede =  new AtorNetGames(controle, this);
+	public InterfaceNot21(Not21ViewControl controle) {
+		super();
+		this.controle = controle;
+		//atorRede =  new AtorNetGames(controle, this);
+		mesa = new Mesa();
 		
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -199,10 +205,10 @@ public class InterfaceNot21 extends JFrame {
 		lblConectar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				nome = JOptionPane.showInputDialog(null, "Escolha o nome do participante");
-				atorRede.conectar(nome, "localhost");
+				//nome = JOptionPane.showInputDialog(null, "Escolha o nome do participante");
+				//atorRede.conectar(nome, "localhost");
 				//InterfaceNot21.this.atorRede.iniciarPartidaRede();
-				
+				conectar();
 			}
 		});
 		lblConectar.setHorizontalAlignment(SwingConstants.CENTER);
@@ -215,6 +221,8 @@ public class InterfaceNot21 extends JFrame {
 		lblIniciar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				int nrJogadores = 2;
+				iniciarPartidaRede(nrJogadores);
 				
 			}
 		});
@@ -271,26 +279,7 @@ public class InterfaceNot21 extends JFrame {
 		//btnNovaMao.setEnabled(minhaVez);
 		//btnParar.setEnabled(minhaVez);
 	}
-	
-	public JFrame getFrame() {
-		return this.getFrame();
-	}
 
-	
-
-	
-
-	public void receberMensagemRede(String mensagem) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	public void mostraMensagemTela(String msg) {
-		//this.lblMsgTela.setText(msg);
-		
-	}
-	
 	public void mostraMensagem(String msg){
 		this.mostraMensagem(msg,INFORMACAO);
 	}
@@ -302,14 +291,20 @@ public class InterfaceNot21 extends JFrame {
 	public String getNomeDoJogador(int numero) {
 		return showInputDialog(this,"Digite o nome do jogador "+numero+": ",TITULO_JANELA,QUESTION_MESSAGE);
 	}
+	
+	public void iniciarPartidaRede(int nrJogadores) {
+		this.controle.iniciarPartidaRede(nrJogadores);
+	}
 
 	public void atualizaMaoJogadores() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	public void criar(Jogador jogador) {
-		// TODO Auto-generated method stub
+		//this.jogador = jogador;
+		//jogador.setNome();
+		//jogador.
 		
 	}
 	
@@ -319,10 +314,13 @@ public class InterfaceNot21 extends JFrame {
 			this.controle.sair();
 	}
 	
+	public void mostraTelaInicial(){
+		thisLayout.show(getContentPane(),"");
+	}
 
 	public void conectar(){
-		String nick = showInputDialog(this,"Digite seu nick: ",TITULO_JANELA,QUESTION_MESSAGE);
-		String servidor = showInputDialog(this,"Digite o servidor: ",TITULO_JANELA,QUESTION_MESSAGE);
+		String nick = showInputDialog(this,"Digite seu nome: ",TITULO_JANELA,QUESTION_MESSAGE);
+		String servidor = "localhost";
 		this.controle.conectar(nick,servidor);
 	}
 	public void desconectar(){
@@ -339,7 +337,7 @@ public class InterfaceNot21 extends JFrame {
 	}
 	
 	private void adicionaJogador(Jogador jogador) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

@@ -1,10 +1,17 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Mesa {
+public class Mesa implements Serializable {
 	   
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4752419345217136903L;
+	
+	
 	private List<Jogador> jogadores;
 	protected Boolean partidaEmAndamento;
 	protected Baralho baralho;

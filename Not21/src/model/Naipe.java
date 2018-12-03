@@ -1,6 +1,8 @@
 package model;
 
-public enum Naipe {
+import java.io.Serializable;
+
+public enum Naipe implements Serializable{
 	
 	   ESPADAS('E'),
 	  

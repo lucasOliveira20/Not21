@@ -1,8 +1,15 @@
 package model;
 
-public class Carta {
+import java.io.Serializable;
+
+public class Carta implements Serializable{
 	   
-	   private Naipe idNipe;
+	   /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2598540039678509964L;
+
+	private Naipe idNipe;
 	   
 	   private NumCarta idCarta;
 

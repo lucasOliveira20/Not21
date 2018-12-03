@@ -1,11 +1,17 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 
-public class Baralho {
+public class Baralho implements Embaralhador,Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8109310505982356365L;
 	
 	protected List<Carta> cartas;
 
@@ -44,4 +50,5 @@ public class Baralho {
 	   if(!this.cartas.contains(carta))
 	      this.cartas.add(carta);
 	}
+
 }

@@ -13,7 +13,7 @@ public class Not21ViewControl {
 
    	public Not21ViewControl(Not21Control control) {
 	   this.control = control;
-       view = new InterfaceNot21();
+       view = new InterfaceNot21(this);
    	}
    
    	public InterfaceNot21 getView() {
@@ -31,7 +31,14 @@ public class Not21ViewControl {
 	public void setControl(Not21Control control) {
 		this.control = control;
 	}
-
+	
+	public void mostraTelaInicial() {
+	      this.view.setLocationRelativeTo(null);
+	      this.view.setVisible(true);
+	      this.view.mostraTelaInicial();
+	   }
+	
+	
  
    public void adicionaJogador(Jogador jogador){
 	   this.view.criar(jogador);
@@ -50,7 +57,7 @@ public class Not21ViewControl {
    }
 
    public void mostraMensagem(String msg) {
-      this.view.mostraMensagemTela(msg);
+      this.view.mostraMensagem(msg);
    }
 	   
 	public void novoJogo() {
@@ -60,7 +67,7 @@ public class Not21ViewControl {
 		this.control.procederJogada(jogada);
 	}
 	public void mostraMensagemTela(String msg){
-		this.view.mostraMensagemTela(msg);
+		this.view.mostraMensagem(msg);
 	}
 
 	public void conectar(String nick, String servidor) {
