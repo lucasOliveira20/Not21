@@ -269,6 +269,54 @@ public class InterfaceNot21 extends JFrame {
 		btnParar.setBackground(SystemColor.text);
 		btnParar.setFont(new Font("Agency FB", Font.PLAIN, 18));
 		
+		JLabel lblValorDaMo = new JLabel("Valor da M\u00E3o");
+		lblValorDaMo.setFont(new Font("Agency FB", Font.PLAIN, 22));
+		lblValorDaMo.setForeground(Color.WHITE);
+		lblValorDaMo.setBounds(10, 382, 113, 40);
+		contentPane.add(lblValorDaMo);
+		
+		JLabel lblDistanciaDoMultiplo = new JLabel("Distancia do Multiplo");
+		lblDistanciaDoMultiplo.setFont(new Font("Agency FB", Font.PLAIN, 22));
+		lblDistanciaDoMultiplo.setForeground(Color.WHITE);
+		lblDistanciaDoMultiplo.setBounds(10, 416, 157, 40);
+		contentPane.add(lblDistanciaDoMultiplo);
+		
+		JLabel label_2 = new JLabel("Valor da M\u00E3o");
+		label_2.setForeground(Color.WHITE);
+		label_2.setFont(new Font("Agency FB", Font.PLAIN, 22));
+		label_2.setBounds(898, 394, 113, 40);
+		contentPane.add(label_2);
+		
+		JLabel label_3 = new JLabel("Distancia do Multiplo");
+		label_3.setForeground(Color.WHITE);
+		label_3.setFont(new Font("Agency FB", Font.PLAIN, 22));
+		label_3.setBounds(898, 428, 171, 40);
+		contentPane.add(label_3);
+		
+		JLabel lblValMaoJ1 = new JLabel("");
+		lblValMaoJ1.setFont(new Font("Tahoma", Font.PLAIN, 21));
+		lblValMaoJ1.setForeground(Color.WHITE);
+		lblValMaoJ1.setBounds(117, 394, 46, 23);
+		contentPane.add(lblValMaoJ1);
+		
+		JLabel lblValMaoJ2 = new JLabel("");
+		lblValMaoJ2.setForeground(Color.WHITE);
+		lblValMaoJ2.setFont(new Font("Tahoma", Font.PLAIN, 21));
+		lblValMaoJ2.setBounds(1009, 404, 46, 23);
+		contentPane.add(lblValMaoJ2);
+		
+		JLabel distMultiJ2 = new JLabel("");
+		distMultiJ2.setForeground(Color.WHITE);
+		distMultiJ2.setFont(new Font("Tahoma", Font.PLAIN, 21));
+		distMultiJ2.setBounds(1057, 441, 46, 23);
+		contentPane.add(distMultiJ2);
+		
+		JLabel distMultiJ1 = new JLabel("");
+		distMultiJ1.setForeground(Color.WHITE);
+		distMultiJ1.setFont(new Font("Tahoma", Font.PLAIN, 21));
+		distMultiJ1.setBounds(160, 428, 46, 23);
+		contentPane.add(distMultiJ1);
+		
 		
 		
 	}
