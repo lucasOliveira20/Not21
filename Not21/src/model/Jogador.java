@@ -40,6 +40,11 @@ public class Jogador implements Jogada{
 		this.pediu = 0;
 	}
 
+	
+	public Carta[] getMan() {
+		return mao.getManeta();
+	}
+	
 	public String getCartaDoBaralho() {
 		Carta carta = this.mesa.getBaralho().getCartaTopo();
 		this.mao.adicionaCarta(carta);

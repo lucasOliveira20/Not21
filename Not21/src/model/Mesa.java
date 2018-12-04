@@ -9,90 +9,95 @@ import javax.swing.JOptionPane;
 import br.ufsc.inf.leobr.cliente.Jogada;
 
 public class Mesa implements Jogada {
-	   
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4752419345217136903L;
-	
-	
+
 	private List<Jogador> jogadores;
 	protected Boolean partidaEmAndamento;
 	protected Baralho baralho;
 	private Jogador vencedor = null;
-	
+
 	private Jogador jogadorAtual;
 
-   public Mesa() {
-	   
-	  this.jogadores = new ArrayList<Jogador>();
-      this.baralho = new Baralho();
-      this.baralho.embaralhar();
-      this.vencedor = null;
-      
-   }
-   
-   public List<Jogador> getJogadores() {
-	   return this.jogadores;
-   }
-   
-   public void setJogadores(List<Jogador> jogadores) {
-	   this.jogadores = jogadores;
-   }
+	public Mesa() {
 
-   
-   public Boolean informaJogadorConectado(Jogador jogador) {
-	   return true; // FAZER
-   }
-   
-   public Boolean informaEmAndamento() {
-   return true;  // FAZER
-	   }
+		this.jogadores = new ArrayList<Jogador>();
+		this.baralho = new Baralho();
+		this.baralho.embaralhar();
+		this.vencedor = null;
+		this.jogadorAtual = null;
 
-	   public Baralho getBaralho() {
-	      return this.baralho;
-	   }
+	}
 
-	   public void setBaralho(Baralho baralho) {
-	      this.baralho = baralho;
-	   }
-   
-	   public void criarJogador(Jogador jogador) {
-		   this.jogadores.add(jogador);
-	  		
-	   }
+	public List<Jogador> getJogadores() {
+		return this.jogadores;
+	}
 
-	   public void distribuiCartas() {
-		   
-		   for(Jogador j : this.jogadores) {	         
-			   	 j.limparMao();
-		         j.getCartaDoBaralho();
-		         j.getCartaDoBaralho();
-		         j.getCartaDoBaralho();
-		   }
-	      
-	   }
-	   
-	   public void maximoCincoJogadas(Jogador jogador){
-		   if(jogador.getnRodads() > 4){
-			   jogador.setParado();
-		   }
-	   }
-	   
-	   public Jogador getJogadorAtual() {
-		   if(this.jogadorAtual == null)this.jogadorAtual = jogadores.get(0);
-		   return this.jogadorAtual;
-	   }
-	   
+	public void setJogadores(List<Jogador> jogadores) {
+		this.jogadores = jogadores;
+	}
+
+	public Boolean informaJogadorConectado(Jogador jogador) {
+		return true; // FAZER
+	}
+
+	public Boolean informaEmAndamento() {
+		return true; // FAZER
+	}
+
+	public Baralho getBaralho() {
+		return this.baralho;
+	}
+
+	public void setBaralho(Baralho baralho) {
+		this.baralho = baralho;
+	}
+
+	public void criarJogador1(Jogador jogador) {
+		this.jogadores.add(jogador);
+		this.jogadorAtual = jogador;
+
+	}
+
+	public void criarJogador2(Jogador jogador) {
+		this.jogadores.add(jogador);
+
+	}
+
+	public void distribuiCartas() {
+
+		for (Jogador j : this.jogadores) {
+			j.limparMao();
+			j.getCartaDoBaralho();
+			j.getCartaDoBaralho();
+			j.getCartaDoBaralho();
+		}
+
+	}
+
+	public void maximoCincoJogadas(Jogador jogador) {
+		if (jogador.getnRodads() > 4) {
+			jogador.setParado();
+		}
+	}
+
+	public Jogador getJogadorAtual() {
+		if (this.jogadorAtual == null)
+			this.jogadorAtual = jogadores.get(0);
+		return this.jogadorAtual;
+	}
 
 	public Jogador getVencedor() {
 		return vencedor;
 	}
-	   
-    public void setVencedor(Jogador j) {
-	   this.vencedor = j;
-    }
-    
+
+	public void setVencedor(Jogador j) {
+		this.vencedor = j;
+	}
+
 	public void avaliaVencedor(List<Jogador> jogadores) {
 		int j1 = jogadores.get(0).distanciaMult();
 		int j2 = jogadores.get(1).distanciaMult();
@@ -140,7 +145,7 @@ public class Mesa implements Jogada {
 			return false;
 		}
 	}
-	
+
 	public int getNumeroJogadoresAtivos() {
 		int cont = 0;
 		for (Jogador player : jogadores) {
@@ -149,7 +154,7 @@ public class Mesa implements Jogada {
 		}
 		return cont;
 	}
-	
+
 	public void setTodosJogadoresAtivos() {
 
 		for (Jogador j : this.jogadores) {
@@ -158,10 +163,36 @@ public class Mesa implements Jogada {
 	}
 
 	public void limpaJogadores() {
-		this.jogadores.clear();		
+		this.jogadores.clear();
 	}
 
 	public String mostraGanhador() {
 		return getVencedor().getNome();
-	}	   
+	}
+
+	public void setEmAndamento(boolean b) {
+		// TODO Auto-generated method stub
+
+	}
+	
+	public void passaVez(Jogador jogador) {
+		if (jogadores.get(0) == jogador) {
+			jogadorAtual = jogadores.get(1);
+		}
+		else if (jogadores.get(1) == jogador) {
+			jogadorAtual = jogadores.get(0);
+		}
+	}
+	
+	public Carta[] getMaoj1() {
+		Carta[] maoJ1= new Carta[3];
+		jogadores.get(0).mao.getManeta();
+	return maoJ1;
+	}
+	
+	public Carta[] getMaoj2() {
+		Carta[] maoJ1= new Carta[3];
+		jogadores.get(1).mao.getManeta();
+	return maoJ1;
+	}
 }

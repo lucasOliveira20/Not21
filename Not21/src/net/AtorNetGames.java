@@ -87,8 +87,6 @@ public class AtorNetGames implements OuvidorProxy {
 		}
 	}
 	
-
-	
 	public void enviarJogada(String mensagem) {
 		
 		Mensagem msg = new Mensagem(mensagem);
@@ -125,25 +123,32 @@ public class AtorNetGames implements OuvidorProxy {
 
 	@Override
 	public void receberJogada(Jogada jogada) {
-		if(jogada instanceof JogadaN21){
-			JogadaN21 jbj = (JogadaN21)jogada;
-			this.control.procederJogada(jbj);
-			if(jbj.equals(JogadaN21.PARAR)){
+		if(jogada instanceof Estado){
+			Estado estado = (Estado)jogada;
+			this.control.setMesa(estado.getMesa());
+			this.control.sincronizaMesa();
+		}else if(jogada instanceof JogadaN21){
+			JogadaN21 jog = (JogadaN21)jogada;
+			this.control.procederJogada(jog);
+			if(jog.equals(JogadaN21.PARAR)){
 				if(nickJogador.equals(this.control.getMesa().getJogadorAtual().getNome())){
-					ehMinhaVez = true;
-					this.control.habilitaDesabilitaBotoes();
+					
+					ehMinhaVez = false;
 					JOptionPane.showMessageDialog(null, "Jogada Recebida!");
 				}
-				if(jbj.equals(JogadaN21.PEDIR)){
+				if(jog.equals(JogadaN21.PEDIR)){
 					
-				}
+					ehMinhaVez = true;
+					JOptionPane.showMessageDialog(null, "Jogada Recebida!");
+					
+				}	
 				
 			}
 		}else if(jogada instanceof Mensagem){
 			Mensagem msg = (Mensagem)jogada;
 			this.control.mostraMensagem(msg.getMensagem());
 		}
-
+		
 	}
 	
 	public void desconectar() {
@@ -197,6 +202,18 @@ public class AtorNetGames implements OuvidorProxy {
 	public void enviaMensagem(String msg) {
 		Mensagem mensagem = new Mensagem(nickJogador+" diz: "+msg);
 		enviarJogada(mensagem);
+	}
+	
+	public void sincronizaMesa(){
+		if(ehMinhaVez){
+			Estado estado = new Estado(control.getMesa());
+			try {
+				proxy.enviaJogada(estado);
+			} catch (NaoJogandoException e) {
+				JOptionPane.showMessageDialog(atorJogador, e.getMessage());
+				e.printStackTrace();
+			}
+		}
 	}
 
 

@@ -61,10 +61,17 @@ public class Not21Control {
 
 		String nome = null;
 		for (int b = 0; b < numeroJogadores; b++) {
-			nome = this.viewControl.getNomeDoJogador(b + 1);
-			Jogador jogador = new Jogador(nome, b + 1, this.mesa);
-			this.mesa.criarJogador(jogador);
-			this.viewControl.adicionaJogador(jogador);
+			if (b == 0) {
+				nome = this.viewControl.getNomeDoJogador(b + 1);
+				Jogador jogador = new Jogador(nome, b + 1, this.mesa);
+				this.mesa.criarJogador1(jogador);
+				this.viewControl.adicionaJogador(jogador);
+			} else {
+				nome = this.viewControl.getNomeDoJogador(b + 1);
+				Jogador jogador = new Jogador(nome, b + 1, this.mesa);
+				this.mesa.criarJogador2(jogador);
+				this.viewControl.adicionaJogador(jogador);
+			}
 		}
 		
 		this.mesa.distribuiCartas();
@@ -74,14 +81,14 @@ public class Not21Control {
 	
 	
 	public void iniciaJogo() {
-		this.viewControl.mostraTelaInicial();
+		this.viewControl.exibeTelaInicial();
 	}
 
 	/**
 	 * Show the main Menu
 	 */
 	public void mostraTelaInicial() {
-		this.viewControl.mostraTelaInicial();
+		this.viewControl.exibeTelaInicial();
 	}
 	
 	
@@ -142,10 +149,10 @@ public class Not21Control {
 
 	public void iniciarPartidaRede(int nrJogadores) {
 
-		this.mesa.limpaJogadores();
+		/*this.mesa.limpaJogadores();
 
 		Jogador jogador = new Jogador(this.atorRede.getNickJogador(),1,this.mesa);
-		this.mesa.criarJogador(jogador);
+		this.mesa.criarJogador1(jogador);
 		this.viewControl.adicionaJogador(jogador);
 		
 		String nomeAdversario = null;
@@ -153,7 +160,28 @@ public class Not21Control {
 		nomeAdversario = atorRede.obterNomeAdversario();
 		
 		Jogador adversario = new Jogador(nomeAdversario,2,this.mesa);
-		this.mesa.criarJogador(adversario);
+		this.mesa.criarJogador2(adversario);
+		this.viewControl.adicionaJogador(adversario);
+	
+
+		this.mesa.distribuiCartas();
+		
+		this.atorRede.iniciarPartidaRede(nrJogadores);
+		
+		this.procederJogada(null);*/
+		
+		this.mesa.limpaJogadores();
+
+		Jogador jogador = new Jogador(this.atorRede.getNickJogador(),1,this.mesa);
+		this.mesa.criarJogador1(jogador);
+		this.viewControl.adicionaJogador(jogador);
+		
+		String nomeAdversario = null;
+		
+		nomeAdversario = atorRede.obterNomeAdversario();
+		
+		Jogador adversario = new Jogador(nomeAdversario,2,this.mesa);
+		this.mesa.criarJogador2(adversario);
 		this.viewControl.adicionaJogador(adversario);
 	
 
@@ -162,6 +190,8 @@ public class Not21Control {
 		this.atorRede.iniciarPartidaRede(nrJogadores);
 		
 		this.procederJogada(null);
+		
+		
 	}
 	
 	public void sincronizaMesa(){

@@ -7,41 +7,30 @@ import static javax.swing.JOptionPane.showConfirmDialog;
 import static javax.swing.JOptionPane.showInputDialog;
 import static javax.swing.JOptionPane.showMessageDialog;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
-import java.awt.Font;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-
-import javax.swing.JButton;
 import java.awt.Dialog.ModalExclusionType;
+import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-
 import controller.Not21ViewControl;
+import model.Carta;
 import model.Jogador;
 import model.Mesa;
 import net.AtorNetGames;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.beans.Expression;
-import java.util.List;
-import java.awt.event.WindowStateListener;
-import java.awt.event.WindowEvent;
 
 public class InterfaceNot21 extends JFrame {
 	
@@ -101,6 +90,7 @@ public class InterfaceNot21 extends JFrame {
 				desconectar();
 			}
 		});
+		
 		btnDesconectar.setHorizontalAlignment(SwingConstants.CENTER);
 		btnDesconectar.setForeground(Color.WHITE);
 		btnDesconectar.setFont(new Font("Agency FB", Font.PLAIN, 20));
@@ -220,6 +210,7 @@ public class InterfaceNot21 extends JFrame {
 				//atorRede.conectar(nome, "localhost");
 				//InterfaceNot21.this.atorRede.iniciarPartidaRede();
 				conectar();
+				
 			}
 		});
 		lblConectar.setHorizontalAlignment(SwingConstants.CENTER);
@@ -234,6 +225,10 @@ public class InterfaceNot21 extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				int nrJogadores = 2;
 				iniciarPartidaRede(nrJogadores);
+				lblJogador.setText(jogador1.getNome());
+				lblJogador_1.setText(jogador2.getNome());			
+				atualizaMaoJ1();
+				repaint();
 				
 			}
 		});
@@ -399,19 +394,38 @@ public class InterfaceNot21 extends JFrame {
 	
 	public void atualizaMaoJ1() {
 		
-		String C1Num;
-		String C1Nipe;
+		String[] temp = new String[3];
 		
-		String C2Num;
-		String C2Nipe;
+		Carta[] aux = new Carta[3];
 		
-		String C3Num;
-		String C3Nipe;
+		aux =  jogador1.getMan();
+		temp[0] = aux[0].toString();
+		temp[1] = aux[1].toString();
+		temp[2] = aux[2].toString();
+		
+		String C1 = temp[0];
+		
+		String C2 = temp[1];
+		
+		String C3 = temp[2];
 		
 	}
 	
 	public void atualizaMaoJ2() {
+		String[] temp = new String[3];
 		
+		Carta[] aux = new Carta[3];
+		
+		aux =  jogador2.getMan();
+		temp[0] = aux[0].toString();
+		temp[1] = aux[1].toString();
+		temp[2] = aux[2].toString();
+		
+		String C1 = temp[0];
+		
+		String C2 = temp[1];
+		
+		String C3 = temp[2];
 	}
 	
 	public void enviaJogadaRede(String jogada){
@@ -438,13 +452,16 @@ public class InterfaceNot21 extends JFrame {
 		mostraMensagem(regras);
 	}
 
-
-
-
-
-	public void criar(Jogador jogador2) {
-		// TODO Auto-generated method stub
+	public void criar(Jogador jogador) {
 		
+		if(jogador.getNumero() == 1) {
+			this.jogador1 = jogador;
+			nome = jogador1.getNome();
+		}
+		if(jogador.getNumero() == 1) {
+			this.jogador2 = jogador;
+			nome = jogador2.getNome();
+		}
 	}
 }
 	

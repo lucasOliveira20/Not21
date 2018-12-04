@@ -32,11 +32,11 @@ public class Not21ViewControl {
 		this.control = control;
 	}
 	
-	public void mostraTelaInicial() {
+	public void exibeTelaInicial() {
 	      this.view.setLocationRelativeTo(null);
 	      this.view.setVisible(true);
 	      this.view.mostraTelaInicial();
-	   }
+	}
 	
 	
  

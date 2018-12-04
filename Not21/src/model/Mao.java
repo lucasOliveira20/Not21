@@ -21,6 +21,10 @@ public class Mao implements Jogada {
 		this.posCarta = 0;
 	}
 	
+	public Carta[] getManeta() {
+		return this.maneta;
+	}
+	
 	public void adicionaCarta(Carta carta){
 		this.cartas.add(carta);
 		maneta[posCarta] = carta;
