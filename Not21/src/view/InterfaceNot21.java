@@ -21,11 +21,13 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 
 import javax.swing.JButton;
 import java.awt.Dialog.ModalExclusionType;
 import java.awt.SystemColor;
 import javax.swing.border.LineBorder;
+
 
 import controller.Not21ViewControl;
 import model.Jogador;
@@ -38,6 +40,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.Expression;
 import java.util.List;
+import java.awt.event.WindowStateListener;
+import java.awt.event.WindowEvent;
 
 public class InterfaceNot21 extends JFrame {
 	
@@ -47,7 +51,8 @@ public class InterfaceNot21 extends JFrame {
 	private String nome = "";
 	private CardLayout thisLayout;
 	private JPanel contentPane;
-	private Jogador jogador;
+	private Jogador jogador1;
+	private Jogador jogador2;
 	
 	public static final int INFORMACAO = INFORMATION_MESSAGE;
 	public static final String TITULO_JANELA = "NOT21";
@@ -61,22 +66,21 @@ public class InterfaceNot21 extends JFrame {
 	 */
 	public InterfaceNot21(Not21ViewControl controle) {
 		super();
+		
 		this.controle = controle;
 		//atorRede =  new AtorNetGames(controle, this);
 		mesa = new Mesa();
 		
+		
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(70, 25, 1131, 700);
+		setBounds(70, 25, 1118, 700);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 100, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		
-		
-		
+
 		JLabel btnReiniciar = new JLabel("Reiniciar");
 		btnReiniciar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -105,7 +109,7 @@ public class InterfaceNot21 extends JFrame {
 		
 		JLabel label = new JLabel("");
 		label.setForeground(Color.BLACK);
-		label.setIcon(new ImageIcon("C:\\Users\\Lucas\\Desktop\\APS\\principal1.png"));
+		
 		label.setBounds(549, 541, 183, 109);
 		contentPane.add(label);
 		
@@ -117,18 +121,24 @@ public class InterfaceNot21 extends JFrame {
 		panel.setLayout(null);
 		
 		JButton btnC = new JButton("C1");
+		btnC.setEnabled(false);
+		btnC.setBorder(null);
 		btnC.setBounds(10, 93, 114, 24);
 		panel.add(btnC);
 		btnC.setFont(new Font("Agency FB", Font.PLAIN, 18));
 		btnC.setBackground(Color.WHITE);
 		
 		JButton btnC_1 = new JButton("C2");
+		btnC_1.setEnabled(false);
+		btnC_1.setBorder(null);
 		btnC_1.setBounds(152, 93, 114, 23);
 		panel.add(btnC_1);
 		btnC_1.setFont(new Font("Agency FB", Font.PLAIN, 18));
 		btnC_1.setBackground(Color.WHITE);
 		
 		JButton btnCounter = new JButton("COUNTER");
+		btnCounter.setEnabled(false);
+		btnCounter.setBorder(null);
 		btnCounter.setBounds(295, 93, 114, 23);
 		panel.add(btnCounter);
 		btnCounter.setFont(new Font("Agency FB", Font.PLAIN, 18));
@@ -137,7 +147,6 @@ public class InterfaceNot21 extends JFrame {
 		JLabel lblC3J1 = new JLabel("");
 		lblC3J1.setBounds(295, 117, 114, 156);
 		panel.add(lblC3J1);
-		lblC3J1.setIcon(new ImageIcon("C:\\Users\\Lucas\\Desktop\\APS\\Not21\\imagens\\Default\\Default.jpg"));
 		
 		JLabel lblJogador = new JLabel("Jogador 1");
 		lblJogador.setBounds(10, 11, 114, 56);
@@ -146,58 +155,60 @@ public class InterfaceNot21 extends JFrame {
 		lblJogador.setFont(new Font("Agency FB", Font.PLAIN, 38));
 		
 		JLabel lblC2J1 = new JLabel("");
-		lblC2J1.setIcon(new ImageIcon("C:\\Users\\Lucas\\Desktop\\APS\\Not21\\imagens\\Default\\Default.jpg"));
 		lblC2J1.setBounds(152, 117, 114, 156);
 		panel.add(lblC2J1);
 		
 		JLabel lblC1J1 = new JLabel("");
-		lblC1J1.setIcon(new ImageIcon("C:\\Users\\Lucas\\Desktop\\APS\\Not21\\imagens\\Default\\Default.jpg"));
 		lblC1J1.setBounds(10, 117, 114, 156);
 		panel.add(lblC1J1);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(34, 139, 34));
 		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_1.setBounds(660, 11, 443, 360);
+		panel_1.setBounds(660, 11, 431, 360);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
 		JLabel lblJogador_1 = new JLabel("Jogador 2");
-		lblJogador_1.setBounds(315, 11, 115, 46);
+		lblJogador_1.setBounds(295, 11, 115, 46);
 		panel_1.add(lblJogador_1);
 		lblJogador_1.setForeground(Color.WHITE);
 		lblJogador_1.setFont(new Font("Agency FB", Font.PLAIN, 38));
 		
 		JButton btnCounter_1 = new JButton("COUNTER");
+		btnCounter_1.setEnabled(false);
+		btnCounter_1.setBorder(null);
 		btnCounter_1.setBounds(295, 91, 114, 23);
 		panel_1.add(btnCounter_1);
 		btnCounter_1.setFont(new Font("Agency FB", Font.PLAIN, 18));
 		btnCounter_1.setBackground(Color.WHITE);
 		
 		JButton button_1 = new JButton("C2");
+		button_1.setEnabled(false);
+		button_1.setBorder(null);
 		button_1.setBounds(152, 91, 114, 23);
 		panel_1.add(button_1);
 		button_1.setFont(new Font("Agency FB", Font.PLAIN, 18));
 		button_1.setBackground(Color.WHITE);
 		
 		JButton button = new JButton("C1");
+		button.setEnabled(false);
+		button.setBorder(null);
 		button.setBounds(10, 91, 114, 24);
 		panel_1.add(button);
 		button.setFont(new Font("Agency FB", Font.PLAIN, 18));
 		button.setBackground(Color.WHITE);
 		
 		JLabel lblC1J2 = new JLabel("");
-		lblC1J2.setIcon(new ImageIcon("C:\\Users\\Lucas\\Desktop\\APS\\Not21\\imagens\\Default\\Default.jpg"));
+		
 		lblC1J2.setBounds(10, 115, 114, 156);
 		panel_1.add(lblC1J2);
 		
 		JLabel lblC2J2 = new JLabel("");
-		lblC2J2.setIcon(new ImageIcon("C:\\Users\\Lucas\\Desktop\\APS\\Not21\\imagens\\Default\\Default.jpg"));
 		lblC2J2.setBounds(152, 115, 114, 156);
 		panel_1.add(lblC2J2);
 		
 		JLabel lblC3J2 = new JLabel("");
-		lblC3J2.setIcon(new ImageIcon("C:\\Users\\Lucas\\Desktop\\APS\\Not21\\imagens\\Default\\Default.jpg"));
 		lblC3J2.setBounds(295, 115, 114, 156);
 		panel_1.add(lblC3J2);
 		
@@ -232,17 +243,17 @@ public class InterfaceNot21 extends JFrame {
 		contentPane.add(lblIniciar);
 		
 		JLabel label_1 = new JLabel("");
-		label_1.setIcon(new ImageIcon("C:\\Users\\Lucas\\Desktop\\APS\\principal1 - Copia.png"));
+		
 		label_1.setForeground(Color.BLACK);
 		label_1.setBounds(383, 541, 183, 109);
 		contentPane.add(label_1);
 		
-		JLabel lblDeckJogador2 = new JLabel("");
-		lblDeckJogador2.setBounds(451, 11, 199, 290);
-		contentPane.add(lblDeckJogador2);
-		lblDeckJogador2.setIcon(new ImageIcon("C:\\Users\\Lucas\\Desktop\\APS\\Not21\\imagens\\Default\\DefaultM.jpg"));
+		JLabel lblDeckJogador = new JLabel("");
+		lblDeckJogador.setBounds(451, 11, 199, 290);
+		contentPane.add(lblDeckJogador);
 		
 		JButton btnNovaMao = new JButton("Nova M\u00E3o");
+		btnNovaMao.setBorder(null);
 		btnNovaMao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -254,6 +265,7 @@ public class InterfaceNot21 extends JFrame {
 		btnNovaMao.setFont(new Font("Agency FB", Font.PLAIN, 18));
 		
 		JButton btnParar = new JButton("Parar");
+		btnParar.setBorder(null);
 		btnParar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -316,9 +328,31 @@ public class InterfaceNot21 extends JFrame {
 		distMultiJ1.setFont(new Font("Tahoma", Font.PLAIN, 21));
 		distMultiJ1.setBounds(160, 428, 46, 23);
 		contentPane.add(distMultiJ1);
+
 		
+		lblC1J1.setIcon(new ImageIcon("imagens/Default.jpg"));
+		lblC2J1.setIcon(new ImageIcon("imagens/Default.jpg"));
+		lblC3J1.setIcon(new ImageIcon("imagens/Default.jpg"));
+		lblC1J2.setIcon(new ImageIcon("imagens/Default.jpg"));
+		lblC2J2.setIcon(new ImageIcon("imagens/Default.jpg"));
+		lblC3J2.setIcon(new ImageIcon("imagens/Default.jpg"));
+		lblDeckJogador.setIcon(new ImageIcon("imagens/DefaultM.jpg"));
 		
+		label.setIcon(new ImageIcon("imagens/principal1.png"));
+		label_1.setIcon(new ImageIcon("imagens/principal.png"));
 		
+		JButton btnRegas = new JButton("Regas");
+		btnRegas.setBorder(null);
+		btnRegas.setForeground(Color.WHITE);
+		btnRegas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mostraRegras();
+			}
+		});
+		btnRegas.setFont(new Font("Agency FB", Font.PLAIN, 18));
+		btnRegas.setBackground(new Color(34, 139, 34));
+		btnRegas.setBounds(10, 602, 74, 48);
+		contentPane.add(btnRegas);
 	}
 	
 
@@ -343,18 +377,6 @@ public class InterfaceNot21 extends JFrame {
 	public void iniciarPartidaRede(int nrJogadores) {
 		this.controle.iniciarPartidaRede(nrJogadores);
 	}
-
-	public void atualizaMaoJogadores() {
-		
-		
-	}
-
-	public void criar(Jogador jogador) {
-		//this.jogador = jogador;
-		//jogador.setNome();
-		//jogador.
-		
-	}
 	
 	public void confirmaSaida(){
 		int result = showConfirmDialog(this, "Deseja mesmo sair?",TITULO_JANELA,YES_NO_OPTION);
@@ -374,42 +396,55 @@ public class InterfaceNot21 extends JFrame {
 	public void desconectar(){
 		this.controle.desconectar();
 	}
-	public void sincronizaMesa(Mesa mesa){
+	
+	public void atualizaMaoJ1() {
 		
-		for(Jogador jogador : mesa.getJogadores()){
-			adicionaJogador(jogador);
-		}
+		String C1Num;
+		String C1Nipe;
 		
-		System.gc();
-		habilitaDesabilitaBotoes();
+		String C2Num;
+		String C2Nipe;
+		
+		String C3Num;
+		String C3Nipe;
+		
 	}
 	
-	private void adicionaJogador(Jogador jogador) {
-		
+	public void atualizaMaoJ2() {
 		
 	}
-
 	
 	public void enviaJogadaRede(String jogada){
 		this.controle.enviaJogadaRede(jogada);
 	}
 	
 	public void mostraRegras(){
+		
 		String regras = 
-			":::::::::::::::::::::::::::::Not 21:::::::::::::::::::::::::::::\n"+
-			"Este jogo é uma versão simplificada do jogo Blackjack (ou 21).\n" +
-			"O objetivo do jogo, é conseguir a pontuação mais alta, que todos,\n" +
-			"porém, inferior a 21. Caso o jogador ultrapasse 21 pontos, ele\n" +
-			"estará fora! Existem 2 tipos de combinações que valem mais que 21 pontos.\n" +
-			"-Blackjack:\n" +
-			"  O jogador possui apenas 1 Ás preto e 1 Valete preto.\n" +
-			"-Cinco Cartas Charlie:\n" +
-			"  O jogador possui cinco cartas na mão, mas sem ultrapassar 21 pontos.\n\n" +
-			"Pontuação das Cartas:\n" +
-			"-ÁS: 1 ou 11 (o que melhor for para o jogador).\n" +
-			"-Cartas de 1 a 10, valem o próprio número.\n" +
-			"-Rei, Dama e Valete valem 10 pontos.";
+			":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::Not 21:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"+
+			"É um jogo de cartas onde vencedor é definido quando aquele de entre\n"+
+			"2 jogadores,mais se aproximarem de um múltiplo de 21 sem atingir o\n"+
+			"número e em até 5 compras de cartas.\n"+
+			"Um baralho de 4 naipes contendo 52 cartas, tendo cada carta do naipe\n"+ 
+			"um valor de 1 a 13 é embaralhado e 3 cartas são distribuídas para cada\n" +
+			"jogador. As duas primeiras cartas sacadas somarão seus valores,\n" +
+			"enquanto a terceira diminuirá seu valor. Se o valor resultante desta\n" + 
+			"equação for satisfatório o jogador poderá não efetuar mais saques mas\n"+
+			"seu oponente sim, respeitando o limite máximo de 5 saques. Quando todos\n"+
+			"os jogadores param é determinado um vencedor\n"+
+			"No caso de um empate o resultado será decidido verificando quem possui\n"+
+			"a mão de maior valor.";
+		
 		mostraMensagem(regras);
+	}
+
+
+
+
+
+	public void criar(Jogador jogador2) {
+		// TODO Auto-generated method stub
+		
 	}
 }
 	

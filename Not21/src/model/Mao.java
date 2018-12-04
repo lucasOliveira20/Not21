@@ -6,21 +6,26 @@ import java.util.List;
 
 import br.ufsc.inf.leobr.cliente.Jogada;
 
-public class Mao implements Serializable {
+public class Mao implements Jogada {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8863416118926452372L;
-	protected  List<Carta> cartas;
 	
+	
+	protected  List<Carta> cartas;
+	protected Carta[] maneta;
+	protected int posCarta;
 	
 	public Mao(){
 		this.cartas = new ArrayList<Carta>();
+		this.maneta = new Carta[3];
+		this.posCarta = 0;
 	}
 	
 	public void adicionaCarta(Carta carta){
 		this.cartas.add(carta);
+		maneta[posCarta] = carta;
+		posCarta++;
+		posCarta = posCarta %3;		
 	}
 	
 	public Carta removeCarta(Carta carta){
@@ -35,11 +40,4 @@ public class Mao implements Serializable {
 		return this.cartas;
 	}
 	
-	public int calculaValorMao() {
-		Carta primeira = cartas.get(0);
-		Carta segunda = cartas.get(1);
-		Carta terceira = cartas.get(2);
-		return primeira.getValor() + segunda.getValor() - terceira.getValor();
-	}
-
 }

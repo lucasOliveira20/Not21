@@ -2,11 +2,10 @@ package model;
 
 import java.io.Serializable;
 
-public class Carta implements Serializable{
-	   
-	   /**
-	 * 
-	 */
+import br.ufsc.inf.leobr.cliente.Jogada;
+
+public class Carta implements Jogada{
+
 	private static final long serialVersionUID = 2598540039678509964L;
 
 	private Naipe idNipe;
@@ -41,15 +40,6 @@ public class Carta implements Serializable{
 	   public int getValor(){
 		   return this.idCarta.getValor();
 	   }
-
-
-	  /* public int hashCode() {
-	      final int prime = 31;
-	      int result = 1;
-	      result = prime * result + ((this.idCarta == null) ? 0 : this.idCarta.hashCode());
-	      result = prime * result + ((this.idNipe == null) ? 0 : this.idNipe.hashCode());
-	      return result;
-	   } */
 
 	   public boolean equals(Object obj) {
 	      if (this == obj)

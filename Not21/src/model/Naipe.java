@@ -2,7 +2,9 @@ package model;
 
 import java.io.Serializable;
 
-public enum Naipe implements Serializable{
+import br.ufsc.inf.leobr.cliente.Jogada;
+
+public enum Naipe implements Jogada{
 	
 	   ESPADAS('E'),
 	  

@@ -1,8 +1,8 @@
 package model;
 
-import java.io.Serializable;
+import br.ufsc.inf.leobr.cliente.Jogada;
 
-public enum NumCarta implements Serializable{
+public enum NumCarta implements Jogada{
 	 
 	   AS(1,"1"),
 	

@@ -165,7 +165,7 @@ public class Not21Control {
 	}
 	
 	public void sincronizaMesa(){
-		this.viewControl.sincronizaMesa();
+		//this.viewControl.sincronizaMesa();
 		this.viewControl.atualizaMaoJogadores();
 	}
 

@@ -3,7 +3,9 @@ package model;
 import java.io.Serializable;
 import java.util.List;
 
-public class Jogador implements Serializable{
+import br.ufsc.inf.leobr.cliente.Jogada;
+
+public class Jogador implements Jogada{
 	
 	private static final long serialVersionUID = 5836112280495926118L;
 

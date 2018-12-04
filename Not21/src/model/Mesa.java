@@ -6,7 +6,9 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-public class Mesa implements Serializable {
+import br.ufsc.inf.leobr.cliente.Jogada;
+
+public class Mesa implements Jogada {
 	   
 	/**
 	 * 

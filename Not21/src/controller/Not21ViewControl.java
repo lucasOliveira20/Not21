@@ -45,7 +45,7 @@ public class Not21ViewControl {
    }
    
    public void atualizaMaoJogadores(){
-	   this.view.atualizaMaoJogadores();
+	   //this.view.atualizaMaoJogadores();
    }
    
    public void sair(){
@@ -82,9 +82,9 @@ public class Not21ViewControl {
 		return this.control.ehMinhaVez();
 	}
 	
-	public void sincronizaMesa(){
+	/*public void sincronizaMesa(){
 		this.view.sincronizaMesa(this.control.getMesa());
-	}
+	}*/
 
 	public void desconectar() {
 		this.control.desconectar();

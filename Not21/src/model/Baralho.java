@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import br.ufsc.inf.leobr.cliente.Jogada;
 
-public class Baralho implements Embaralhador,Serializable{
+public class Baralho implements Embaralhador,Jogada{
 	
 	/**
 	 * 
