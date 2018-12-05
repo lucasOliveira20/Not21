@@ -19,7 +19,6 @@ public class Mesa implements Jogada {
 	protected Boolean partidaEmAndamento;
 	protected Baralho baralho;
 	private Jogador vencedor = null;
-
 	private Jogador jogadorAtual;
 
 	public Mesa() {
@@ -38,14 +37,6 @@ public class Mesa implements Jogada {
 
 	public void setJogadores(List<Jogador> jogadores) {
 		this.jogadores = jogadores;
-	}
-
-	public Boolean informaJogadorConectado(Jogador jogador) {
-		return true; // FAZER
-	}
-
-	public Boolean informaEmAndamento() {
-		return true; // FAZER
 	}
 
 	public Baralho getBaralho() {
@@ -83,8 +74,20 @@ public class Mesa implements Jogada {
 			jogador.setParado();
 		}
 	}
-
+	public Jogador passaIndependente() {
+		if (this.jogadorAtual == jogadores.get(0)) {
+			jogadorAtual = jogadores.get(1);
+			
+		}
+		else if (this.jogadorAtual == jogadores.get(1)) {
+			jogadorAtual = jogadores.get(0);
+		}
+		return jogadorAtual;
+	}
 	public Jogador getJogadorAtual() {
+		return this.jogadorAtual;
+	}
+	public Jogador setPrimeiroJogadorAtual() {
 		if (this.jogadorAtual == null)
 			this.jogadorAtual = jogadores.get(0);
 		return this.jogadorAtual;
@@ -175,14 +178,14 @@ public class Mesa implements Jogada {
 
 	}
 	
-	public void passaVez(Jogador jogador) {
+	/*public void passaVez(Jogador jogador) {
 		if (jogadores.get(0) == jogador) {
 			jogadorAtual = jogadores.get(1);
 		}
 		else if (jogadores.get(1) == jogador) {
 			jogadorAtual = jogadores.get(0);
 		}
-	}
+	}*/
 	
 	public Carta[] getMaoj1() {
 		Carta[] maoJ1= new Carta[3];

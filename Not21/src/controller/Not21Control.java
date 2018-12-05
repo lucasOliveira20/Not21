@@ -105,6 +105,8 @@ public class Not21Control {
 
 			if (jogada.equals(JogadaN21.PEDIR)) {
 				jogadorAtual.getCartaDoBaralho();
+				jogadorAtual.getCartaDoBaralho();
+				jogadorAtual.getCartaDoBaralho();
 				
 				this.viewControl.atualizaMaoJogadores();
 				if(jogadorAtual.isParado()){
@@ -117,12 +119,13 @@ public class Not21Control {
 						resultado = this.mesa.mostraGanhador();
 					}
 				}
-					mostraMensagemTela(String.format("É a vez de %s!",this.mesa.getJogadorAtual()));
+					mostraMensagemTela(String.format("ï¿½ a vez de %s!",this.mesa.getJogadorAtual()));
 				} 
 				else if (jogada.equals(JogadaN21.PARAR)) {
 
 					try {
-						mostraMensagemTela(String.format("É a vez de %s!",this.mesa.getJogadorAtual()));
+						mesa.getJogadorAtual().setParado();
+						mostraMensagemTela(String.format("ï¿½ a vez de %s!",this.mesa.getJogadorAtual()));
 					} catch (Exception e) {
 						mostraMensagem(e.getMessage());
 						resultado = this.mesa.mostraGanhador();
@@ -195,7 +198,7 @@ public class Not21Control {
 	}
 	
 	public void sincronizaMesa(){
-		//this.viewControl.sincronizaMesa();
+		this.viewControl.sincronizaMesa();
 		this.viewControl.atualizaMaoJogadores();
 	}
 
@@ -204,7 +207,7 @@ public class Not21Control {
 		this.atorRede.desconectar();
 	}
 
-	public void enviaJogadaRede(String jogada) {
+	public void enviaJogadaRede(JogadaN21 jogada) {
 		this.atorRede.enviarJogada(jogada);
 	}
 	public void habilitaDesabilitaBotoes(){
@@ -220,7 +223,11 @@ public class Not21Control {
 	}
 	
 	public void verificaVez(){
-		if(this.atorRede.getNickJogador().equals(this.mesa.getJogadorAtual().getNome())){
+		if(this.atorRede.getNickJogador().equals(this.mesa.getJogadorAtual().getNome()) 
+				&& this.mesa.getJogadorAtual().isParado() == true){
+			this.atorRede.setMinhaVez(false);
+			this.mesa.passaIndependente();
+		} else if (this.atorRede.getNickJogador().equals(this.mesa.getJogadorAtual().getNome()) ) {
 			this.atorRede.setMinhaVez(true);
 		}else{
 			this.atorRede.setMinhaVez(false);

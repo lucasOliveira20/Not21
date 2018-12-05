@@ -114,9 +114,11 @@ public class AtorNetGames implements OuvidorProxy {
 			JogadaN21 jbj = (JogadaN21)jogada;
 			if(jbj.equals(JogadaN21.PARAR)){
 				JOptionPane.showMessageDialog(null, "Jogada Enviada!");
+				this.control.habilitaDesabilitaBotoes();
 			}
 			if(jbj.equals(JogadaN21.PEDIR)){
 				JOptionPane.showMessageDialog(null, "Jogada Enviada!");
+				this.control.habilitaDesabilitaBotoes();
 			}
 		}
 	}
@@ -181,13 +183,13 @@ public class AtorNetGames implements OuvidorProxy {
 
 	@Override
 	public void tratarConexaoPerdida() {
-		JOptionPane.showMessageDialog(atorJogador, "A conexão com o servidor foi perdida!");
+		JOptionPane.showMessageDialog(atorJogador, "A conexï¿½o com o servidor foi perdida!");
 
 	}
 
 	@Override
 	public void tratarPartidaNaoIniciada(String message) {
-		JOptionPane.showMessageDialog(atorJogador, "Não foi possível iniciar a partida");
+		JOptionPane.showMessageDialog(atorJogador, "Nï¿½o foi possï¿½vel iniciar a partida");
 
 	}
 	

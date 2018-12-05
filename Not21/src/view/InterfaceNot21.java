@@ -28,12 +28,15 @@ import javax.swing.border.LineBorder;
 
 import controller.Not21ViewControl;
 import model.Carta;
+import model.JogadaN21;
 import model.Jogador;
 import model.Mesa;
 import net.AtorNetGames;
 
 public class InterfaceNot21 extends JFrame {
-	
+
+	private static boolean JOGO_EM_REDE = false;
+
 	AtorNetGames atorRede;
 	Mesa mesa;
 	private Not21ViewControl controle;
@@ -42,25 +45,36 @@ public class InterfaceNot21 extends JFrame {
 	private JPanel contentPane;
 	private Jogador jogador1;
 	private Jogador jogador2;
-	
-	public static final int INFORMACAO = INFORMATION_MESSAGE;
-	public static final String TITULO_JANELA = "NOT21";
+	private JButton btnNovaMao;
+	private JButton btnParar;
+	private JLabel lblC1J1;
+	private JLabel lblC2J1;
+	private JLabel lblC3J1;
+	private JLabel lblC1J2;
+	private JLabel lblC2J2;
+	private JLabel lblC3J2;
+	private JLabel lblJogador;
+	private JLabel lblJogador_1;
+
+	public final int INFORMACAO = INFORMATION_MESSAGE;
+	public final String TITULO_JANELA = "NOT21";
+
+	private final String PAINEL_JOGO = null;
+
 	/**
 	 * Launch the application.
 	 */
-	
 
 	/**
 	 * Create the frame.
 	 */
 	public InterfaceNot21(Not21ViewControl controle) {
 		super();
-		
+
 		this.controle = controle;
-		//atorRede =  new AtorNetGames(controle, this);
+		// atorRede = new AtorNetGames(controle, this);
 		mesa = new Mesa();
-		
-		
+
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(70, 25, 1118, 700);
@@ -74,7 +88,7 @@ public class InterfaceNot21 extends JFrame {
 		btnReiniciar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				
+
 			}
 		});
 		btnReiniciar.setHorizontalAlignment(SwingConstants.CENTER);
@@ -82,7 +96,7 @@ public class InterfaceNot21 extends JFrame {
 		btnReiniciar.setFont(new Font("Agency FB", Font.PLAIN, 20));
 		btnReiniciar.setBounds(559, 555, 63, 84);
 		contentPane.add(btnReiniciar);
-		
+
 		JLabel btnDesconectar = new JLabel("Desconectar");
 		btnDesconectar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -90,26 +104,26 @@ public class InterfaceNot21 extends JFrame {
 				desconectar();
 			}
 		});
-		
+
 		btnDesconectar.setHorizontalAlignment(SwingConstants.CENTER);
 		btnDesconectar.setForeground(Color.WHITE);
 		btnDesconectar.setFont(new Font("Agency FB", Font.PLAIN, 20));
 		btnDesconectar.setBounds(648, 541, 74, 98);
 		contentPane.add(btnDesconectar);
-		
+
 		JLabel label = new JLabel("");
 		label.setForeground(Color.BLACK);
-		
+
 		label.setBounds(549, 541, 183, 109);
 		contentPane.add(label);
-		
+
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(34, 139, 34));
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel.setBounds(10, 11, 431, 360);
 		contentPane.add(panel);
 		panel.setLayout(null);
-		
+
 		JButton btnC = new JButton("C1");
 		btnC.setEnabled(false);
 		btnC.setBorder(null);
@@ -117,7 +131,7 @@ public class InterfaceNot21 extends JFrame {
 		panel.add(btnC);
 		btnC.setFont(new Font("Agency FB", Font.PLAIN, 18));
 		btnC.setBackground(Color.WHITE);
-		
+
 		JButton btnC_1 = new JButton("C2");
 		btnC_1.setEnabled(false);
 		btnC_1.setBorder(null);
@@ -125,7 +139,7 @@ public class InterfaceNot21 extends JFrame {
 		panel.add(btnC_1);
 		btnC_1.setFont(new Font("Agency FB", Font.PLAIN, 18));
 		btnC_1.setBackground(Color.WHITE);
-		
+
 		JButton btnCounter = new JButton("COUNTER");
 		btnCounter.setEnabled(false);
 		btnCounter.setBorder(null);
@@ -133,38 +147,38 @@ public class InterfaceNot21 extends JFrame {
 		panel.add(btnCounter);
 		btnCounter.setFont(new Font("Agency FB", Font.PLAIN, 18));
 		btnCounter.setBackground(Color.WHITE);
-		
-		JLabel lblC3J1 = new JLabel("");
+
+		lblC3J1 = new JLabel("");
 		lblC3J1.setBounds(295, 117, 114, 156);
 		panel.add(lblC3J1);
-		
-		JLabel lblJogador = new JLabel("Jogador 1");
+
+		lblJogador = new JLabel("Jogador 1");
 		lblJogador.setBounds(10, 11, 114, 56);
 		panel.add(lblJogador);
 		lblJogador.setForeground(Color.WHITE);
 		lblJogador.setFont(new Font("Agency FB", Font.PLAIN, 38));
-		
-		JLabel lblC2J1 = new JLabel("");
+
+		lblC2J1 = new JLabel("");
 		lblC2J1.setBounds(152, 117, 114, 156);
 		panel.add(lblC2J1);
-		
-		JLabel lblC1J1 = new JLabel("");
+
+		lblC1J1 = new JLabel("");
 		lblC1J1.setBounds(10, 117, 114, 156);
 		panel.add(lblC1J1);
-		
+
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(34, 139, 34));
 		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_1.setBounds(660, 11, 431, 360);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
-		
-		JLabel lblJogador_1 = new JLabel("Jogador 2");
+
+		lblJogador_1 = new JLabel("Jogador 2");
 		lblJogador_1.setBounds(295, 11, 115, 46);
 		panel_1.add(lblJogador_1);
 		lblJogador_1.setForeground(Color.WHITE);
 		lblJogador_1.setFont(new Font("Agency FB", Font.PLAIN, 38));
-		
+
 		JButton btnCounter_1 = new JButton("COUNTER");
 		btnCounter_1.setEnabled(false);
 		btnCounter_1.setBorder(null);
@@ -172,7 +186,7 @@ public class InterfaceNot21 extends JFrame {
 		panel_1.add(btnCounter_1);
 		btnCounter_1.setFont(new Font("Agency FB", Font.PLAIN, 18));
 		btnCounter_1.setBackground(Color.WHITE);
-		
+
 		JButton button_1 = new JButton("C2");
 		button_1.setEnabled(false);
 		button_1.setBorder(null);
@@ -180,7 +194,7 @@ public class InterfaceNot21 extends JFrame {
 		panel_1.add(button_1);
 		button_1.setFont(new Font("Agency FB", Font.PLAIN, 18));
 		button_1.setBackground(Color.WHITE);
-		
+
 		JButton button = new JButton("C1");
 		button.setEnabled(false);
 		button.setBorder(null);
@@ -188,29 +202,28 @@ public class InterfaceNot21 extends JFrame {
 		panel_1.add(button);
 		button.setFont(new Font("Agency FB", Font.PLAIN, 18));
 		button.setBackground(Color.WHITE);
-		
-		JLabel lblC1J2 = new JLabel("");
-		
+
+		lblC1J2 = new JLabel("");
 		lblC1J2.setBounds(10, 115, 114, 156);
 		panel_1.add(lblC1J2);
-		
-		JLabel lblC2J2 = new JLabel("");
+
+		lblC2J2 = new JLabel("");
 		lblC2J2.setBounds(152, 115, 114, 156);
 		panel_1.add(lblC2J2);
-		
-		JLabel lblC3J2 = new JLabel("");
+
+		lblC3J2 = new JLabel("");
 		lblC3J2.setBounds(295, 115, 114, 156);
 		panel_1.add(lblC3J2);
-		
+
 		JLabel lblConectar = new JLabel("Conectar");
 		lblConectar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				//nome = JOptionPane.showInputDialog(null, "Escolha o nome do participante");
-				//atorRede.conectar(nome, "localhost");
-				//InterfaceNot21.this.atorRede.iniciarPartidaRede();
+				// nome = JOptionPane.showInputDialog(null, "Escolha o nome do participante");
+				// atorRede.conectar(nome, "localhost");
+				// InterfaceNot21.this.atorRede.iniciarPartidaRede();
 				conectar();
-				
+
 			}
 		});
 		lblConectar.setHorizontalAlignment(SwingConstants.CENTER);
@@ -218,7 +231,7 @@ public class InterfaceNot21 extends JFrame {
 		lblConectar.setFont(new Font("Agency FB", Font.PLAIN, 20));
 		lblConectar.setBounds(391, 555, 74, 84);
 		contentPane.add(lblConectar);
-		
+
 		JLabel lblIniciar = new JLabel("    Iniciar");
 		lblIniciar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -226,40 +239,40 @@ public class InterfaceNot21 extends JFrame {
 				int nrJogadores = 2;
 				iniciarPartidaRede(nrJogadores);
 				lblJogador.setText(jogador1.getNome());
-				lblJogador_1.setText(jogador2.getNome());			
+				lblJogador_1.setText(jogador2.getNome());
 				atualizaMaoJ1();
 				repaint();
-				
+
 			}
 		});
 		lblIniciar.setForeground(Color.WHITE);
 		lblIniciar.setFont(new Font("Agency FB", Font.PLAIN, 20));
 		lblIniciar.setBounds(475, 551, 74, 92);
 		contentPane.add(lblIniciar);
-		
+
 		JLabel label_1 = new JLabel("");
-		
+
 		label_1.setForeground(Color.BLACK);
 		label_1.setBounds(383, 541, 183, 109);
 		contentPane.add(label_1);
-		
+
 		JLabel lblDeckJogador = new JLabel("");
 		lblDeckJogador.setBounds(451, 11, 199, 290);
 		contentPane.add(lblDeckJogador);
-		
-		JButton btnNovaMao = new JButton("Nova M\u00E3o");
+
+		btnNovaMao = new JButton("Nova M\u00E3o");
 		btnNovaMao.setBorder(null);
 		btnNovaMao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 			}
 		});
 		btnNovaMao.setBounds(451, 312, 199, 23);
 		contentPane.add(btnNovaMao);
 		btnNovaMao.setBackground(SystemColor.text);
 		btnNovaMao.setFont(new Font("Agency FB", Font.PLAIN, 18));
-		
-		JButton btnParar = new JButton("Parar");
+
+		btnParar = new JButton("Parar");
 		btnParar.setBorder(null);
 		btnParar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -268,63 +281,62 @@ public class InterfaceNot21 extends JFrame {
 		});
 		btnParar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 			}
 		});
 		btnParar.setBounds(451, 348, 199, 23);
 		contentPane.add(btnParar);
 		btnParar.setBackground(SystemColor.text);
 		btnParar.setFont(new Font("Agency FB", Font.PLAIN, 18));
-		
+
 		JLabel lblValorDaMo = new JLabel("Valor da M\u00E3o");
 		lblValorDaMo.setFont(new Font("Agency FB", Font.PLAIN, 22));
 		lblValorDaMo.setForeground(Color.WHITE);
 		lblValorDaMo.setBounds(10, 382, 113, 40);
 		contentPane.add(lblValorDaMo);
-		
+
 		JLabel lblDistanciaDoMultiplo = new JLabel("Distancia do Multiplo");
 		lblDistanciaDoMultiplo.setFont(new Font("Agency FB", Font.PLAIN, 22));
 		lblDistanciaDoMultiplo.setForeground(Color.WHITE);
 		lblDistanciaDoMultiplo.setBounds(10, 416, 157, 40);
 		contentPane.add(lblDistanciaDoMultiplo);
-		
+
 		JLabel label_2 = new JLabel("Valor da M\u00E3o");
 		label_2.setForeground(Color.WHITE);
 		label_2.setFont(new Font("Agency FB", Font.PLAIN, 22));
 		label_2.setBounds(898, 394, 113, 40);
 		contentPane.add(label_2);
-		
+
 		JLabel label_3 = new JLabel("Distancia do Multiplo");
 		label_3.setForeground(Color.WHITE);
 		label_3.setFont(new Font("Agency FB", Font.PLAIN, 22));
 		label_3.setBounds(898, 428, 171, 40);
 		contentPane.add(label_3);
-		
+
 		JLabel lblValMaoJ1 = new JLabel("");
 		lblValMaoJ1.setFont(new Font("Tahoma", Font.PLAIN, 21));
 		lblValMaoJ1.setForeground(Color.WHITE);
 		lblValMaoJ1.setBounds(117, 394, 46, 23);
 		contentPane.add(lblValMaoJ1);
-		
+
 		JLabel lblValMaoJ2 = new JLabel("");
 		lblValMaoJ2.setForeground(Color.WHITE);
 		lblValMaoJ2.setFont(new Font("Tahoma", Font.PLAIN, 21));
 		lblValMaoJ2.setBounds(1009, 404, 46, 23);
 		contentPane.add(lblValMaoJ2);
-		
+
 		JLabel distMultiJ2 = new JLabel("");
 		distMultiJ2.setForeground(Color.WHITE);
 		distMultiJ2.setFont(new Font("Tahoma", Font.PLAIN, 21));
 		distMultiJ2.setBounds(1057, 441, 46, 23);
 		contentPane.add(distMultiJ2);
-		
+
 		JLabel distMultiJ1 = new JLabel("");
 		distMultiJ1.setForeground(Color.WHITE);
 		distMultiJ1.setFont(new Font("Tahoma", Font.PLAIN, 21));
 		distMultiJ1.setBounds(160, 428, 46, 23);
 		contentPane.add(distMultiJ1);
 
-		
 		lblC1J1.setIcon(new ImageIcon("imagens/Default.jpg"));
 		lblC2J1.setIcon(new ImageIcon("imagens/Default.jpg"));
 		lblC3J1.setIcon(new ImageIcon("imagens/Default.jpg"));
@@ -332,10 +344,10 @@ public class InterfaceNot21 extends JFrame {
 		lblC2J2.setIcon(new ImageIcon("imagens/Default.jpg"));
 		lblC3J2.setIcon(new ImageIcon("imagens/Default.jpg"));
 		lblDeckJogador.setIcon(new ImageIcon("imagens/DefaultM.jpg"));
-		
+
 		label.setIcon(new ImageIcon("imagens/principal1.png"));
 		label_1.setIcon(new ImageIcon("imagens/principal.png"));
-		
+
 		JButton btnRegas = new JButton("Regas");
 		btnRegas.setBorder(null);
 		btnRegas.setForeground(Color.WHITE);
@@ -349,122 +361,150 @@ public class InterfaceNot21 extends JFrame {
 		btnRegas.setBounds(10, 602, 74, 48);
 		contentPane.add(btnRegas);
 	}
-	
 
-	public void habilitaDesabilitaBotoes(){
+	public void habilitaDesabilitaBotoes() {
 		boolean minhaVez = this.controle.ehMinhaVez();
-		//btnNovaMao.setEnabled(minhaVez);
-		//btnParar.setEnabled(minhaVez);
+		btnNovaMao.setEnabled(minhaVez);
+		btnParar.setEnabled(minhaVez);
 	}
 
-	public void mostraMensagem(String msg){
-		this.mostraMensagem(msg,INFORMACAO);
+	public void mostraMensagem(String msg) {
+		this.mostraMensagem(msg, INFORMACAO);
 	}
 
 	private void mostraMensagem(String msg, int tipoMensagem) {
-		showMessageDialog(this, msg,TITULO_JANELA,tipoMensagem);
+		showMessageDialog(this, msg, TITULO_JANELA, tipoMensagem);
 	}
 
 	public String getNomeDoJogador(int numero) {
-		return showInputDialog(this,"Digite o nome do jogador "+numero+": ",TITULO_JANELA,QUESTION_MESSAGE);
+		return showInputDialog(this, "Digite o nome do jogador " + numero + ": ", TITULO_JANELA, QUESTION_MESSAGE);
 	}
-	
+
 	public void iniciarPartidaRede(int nrJogadores) {
 		this.controle.iniciarPartidaRede(nrJogadores);
 	}
-	
-	public void confirmaSaida(){
-		int result = showConfirmDialog(this, "Deseja mesmo sair?",TITULO_JANELA,YES_NO_OPTION);
-		if(result == 0)
+
+	public void confirmaSaida() {
+		int result = showConfirmDialog(this, "Deseja mesmo sair?", TITULO_JANELA, YES_NO_OPTION);
+		if (result == 0)
 			this.controle.sair();
 	}
-	
-	public void mostraTelaInicial(){
-		thisLayout.show(getContentPane(),"");
+
+	public void mostraTelaInicial() {
+		thisLayout.show(getContentPane(), "");
 	}
 
-	public void conectar(){
-		String nick = showInputDialog(this,"Digite seu nome: ",TITULO_JANELA,QUESTION_MESSAGE);
+	public void conectar() {
+		String nick = showInputDialog(this, "Digite seu nome: ", TITULO_JANELA, QUESTION_MESSAGE);
 		String servidor = "localhost";
-		this.controle.conectar(nick,servidor);
+		this.controle.conectar(nick, servidor);
 	}
-	public void desconectar(){
+
+	public void desconectar() {
 		this.controle.desconectar();
 	}
-	
-	public void atualizaMaoJ1() {
-		
-		String[] temp = new String[3];
-		
-		Carta[] aux = new Carta[3];
-		
-		aux =  jogador1.getMan();
-		temp[0] = aux[0].toString();
-		temp[1] = aux[1].toString();
-		temp[2] = aux[2].toString();
-		
-		String C1 = temp[0];
-		
-		String C2 = temp[1];
-		
-		String C3 = temp[2];
-		
-	}
-	
-	public void atualizaMaoJ2() {
-		String[] temp = new String[3];
-		
-		Carta[] aux = new Carta[3];
-		
-		aux =  jogador2.getMan();
-		temp[0] = aux[0].toString();
-		temp[1] = aux[1].toString();
-		temp[2] = aux[2].toString();
-		
-		String C1 = temp[0];
-		
-		String C2 = temp[1];
-		
-		String C3 = temp[2];
-	}
-	
-	public void enviaJogadaRede(String jogada){
-		this.controle.enviaJogadaRede(jogada);
-	}
-	
-	public void mostraRegras(){
-		
-		String regras = 
-			":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::Not 21:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"+
-			"É um jogo de cartas onde vencedor é definido quando aquele de entre\n"+
-			"2 jogadores,mais se aproximarem de um múltiplo de 21 sem atingir o\n"+
-			"número e em até 5 compras de cartas.\n"+
-			"Um baralho de 4 naipes contendo 52 cartas, tendo cada carta do naipe\n"+ 
-			"um valor de 1 a 13 é embaralhado e 3 cartas são distribuídas para cada\n" +
-			"jogador. As duas primeiras cartas sacadas somarão seus valores,\n" +
-			"enquanto a terceira diminuirá seu valor. Se o valor resultante desta\n" + 
-			"equação for satisfatório o jogador poderá não efetuar mais saques mas\n"+
-			"seu oponente sim, respeitando o limite máximo de 5 saques. Quando todos\n"+
-			"os jogadores param é determinado um vencedor\n"+
-			"No caso de um empate o resultado será decidido verificando quem possui\n"+
-			"a mão de maior valor.";
-		
-		mostraMensagem(regras);
+
+	public void sincronizaMesa(Mesa mesa) {
+		contentPane.removeAll();
+		thisLayout.show(getContentPane(), PAINEL_JOGO);
+		for (Jogador jogador : mesa.getJogadores()) {
+			criar(jogador);
+		}
+		contentPane.repaint();
+		System.gc();
+		habilitaDesabilitaBotoes();
 	}
 
 	public void criar(Jogador jogador) {
-		
-		if(jogador.getNumero() == 1) {
+
+		if (jogador.getNumero() == 1) {
 			this.jogador1 = jogador;
 			nome = jogador1.getNome();
+			lblJogador.setText(nome);
 		}
-		if(jogador.getNumero() == 1) {
+		if (jogador.getNumero() == 2) {
 			this.jogador2 = jogador;
 			nome = jogador2.getNome();
+			lblJogador_1.setText(nome);
 		}
+		contentPane.repaint();
 	}
-}
-	
-	
 
-	
+	public void atualizaMaoJ1() {
+
+		String[] temp = new String[3];
+
+		Carta[] aux = new Carta[3];
+
+		aux = jogador1.getMan();
+		temp[0] = aux[0].toString();
+		temp[1] = aux[1].toString();
+		temp[2] = aux[2].toString();
+
+		String C1 = temp[0];
+		lblC2J1.setIcon(new ImageIcon("imagens/%s.jpg", C1));
+		String C2 = temp[1];
+		lblC2J1.setIcon(new ImageIcon("imagens/%s.jpg", C2));
+		String C3 = temp[2];
+		lblC2J1.setIcon(new ImageIcon("imagens/%s.jpg", C3));
+		
+		contentPane.repaint();
+	}
+
+	public void atualizaMaoJ2() {
+		
+		String[] temp = new String[3];
+
+		Carta[] aux = new Carta[3];
+
+		aux = jogador2.getMan();
+		temp[0] = aux[0].toString();
+		temp[1] = aux[1].toString();
+		temp[2] = aux[2].toString();
+
+		String C1 = temp[0];
+		lblC1J2.setIcon(new ImageIcon("imagens/%s.jpg", C1));
+		String C2 = temp[1];
+		lblC2J2.setIcon(new ImageIcon("imagens/%s.jpg", C2));
+		String C3 = temp[2];
+		lblC3J2.setIcon(new ImageIcon("imagens/%s.jpg", C3));
+		contentPane.repaint();
+	}
+
+	public void enviaJogadaRede(JogadaN21 jogada) {
+		this.controle.enviaJogadaRede(jogada);
+	}
+
+	public void mostraRegras() {
+
+		String regras = ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::Not 21:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
+				+ "ï¿½ um jogo de cartas onde vencedor ï¿½ definido quando aquele de entre\n"
+				+ "2 jogadores,mais se aproximarem de um mï¿½ltiplo de 21 sem atingir o\n"
+				+ "nï¿½mero e em atï¿½ 5 compras de cartas.\n"
+				+ "Um baralho de 4 naipes contendo 52 cartas, tendo cada carta do naipe\n"
+				+ "um valor de 1 a 13 ï¿½ embaralhado e 3 cartas sï¿½o distribuï¿½das para cada\n"
+				+ "jogador. As duas primeiras cartas sacadas somarï¿½o seus valores,\n"
+				+ "enquanto a terceira diminuirï¿½ seu valor. Se o valor resultante desta\n"
+				+ "equaï¿½ï¿½o for satisfatï¿½rio o jogador poderï¿½ nï¿½o efetuar mais saques mas\n"
+				+ "seu oponente sim, respeitando o limite mï¿½ximo de 5 saques. Quando todos\n"
+				+ "os jogadores param ï¿½ determinado um vencedor\n"
+				+ "No caso de um empate o resultado serï¿½ decidido verificando quem possui\n" + "a mï¿½o de maior valor.";
+
+		mostraMensagem(regras);
+	}
+
+	public void pegarCartaAction() {
+		if (JOGO_EM_REDE)
+			enviaJogadaRede(JogadaN21.PEDIR);
+
+		this.controle.procederLance(JogadaN21.PEDIR);
+	}
+
+	public void passarAVezAction() {
+		if (JOGO_EM_REDE)
+			enviaJogadaRede(JogadaN21.PARAR);
+
+		this.controle.procederLance(JogadaN21.PARAR);
+	}
+
+}
