@@ -19,6 +19,7 @@ public class Mesa implements Jogada {
 	protected Boolean partidaEmAndamento;
 	protected Baralho baralho;
 	private Jogador vencedor = null;
+
 	private Jogador jogadorAtual;
 
 	public Mesa() {
@@ -27,7 +28,6 @@ public class Mesa implements Jogada {
 		this.baralho = new Baralho();
 		this.baralho.embaralhar();
 		this.vencedor = null;
-		this.jogadorAtual = null;
 
 	}
 
@@ -42,7 +42,15 @@ public class Mesa implements Jogada {
 	public Baralho getBaralho() {
 		return this.baralho;
 	}
-
+//teste para pegar carta do baralho
+	public String getCartaDoBaralho() {
+		Carta carta = getBaralho().getCartaTopo(); //jogadorAtual.  //mesa.getBaralho().getCartaTopo();
+		jogadorAtual.mao.adicionaCarta(carta);
+		return String.format("%s pega a carta %s!", jogadorAtual.nome, carta);
+	}
+	
+	
+	
 	public void setBaralho(Baralho baralho) {
 		this.baralho = baralho;
 	}
@@ -62,9 +70,11 @@ public class Mesa implements Jogada {
 
 		for (Jogador j : this.jogadores) {
 			j.limparMao();
-			j.getCartaDoBaralho();
-			j.getCartaDoBaralho();
-			j.getCartaDoBaralho();
+			getCartaDoBaralho();
+			getCartaDoBaralho();
+			getCartaDoBaralho();
+			
+			passaIndependente();
 		}
 
 	}

@@ -2,6 +2,7 @@ package controller;
 
 import model.JogadaN21;
 import model.Jogador;
+import net.Estado;
 import view.InterfaceNot21;
 
 public class Not21ViewControl {
@@ -35,7 +36,7 @@ public class Not21ViewControl {
 	public void exibeTelaInicial() {
 	      this.view.setLocationRelativeTo(null);
 	      this.view.setVisible(true);
-	      this.view.mostraTelaInicial();
+	     // this.view.mostraTelaInicial();
 	}
 	
 	
@@ -64,7 +65,7 @@ public class Not21ViewControl {
 	public void novoJogo() {
 		this.control.novoJogo();
 	}
-	public void procederLance(JogadaN21 jogada){
+	public void procederLance(String jogada){
 		this.control.procederJogada(jogada);
 	}
 	public void mostraMensagemTela(String msg){
@@ -91,7 +92,7 @@ public class Not21ViewControl {
 		this.control.desconectar();
 	}
 
-	public void enviaJogadaRede(JogadaN21 jogada) {
+	public void enviaJogadaRede(Estado jogada) {
 		this.control.enviaJogadaRede(jogada);
 	}
 
@@ -99,9 +100,9 @@ public class Not21ViewControl {
 		this.view.habilitaDesabilitaBotoes();
 	}
 
-	public void enviaMensagem(String msg) {
-		this.control.enviaMensagem(msg);
-	}
+//	public void enviaMensagem(String msg) {
+//		this.control.enviaMensagem(msg);
+//	}
 	
 	
 

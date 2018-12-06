@@ -4,7 +4,7 @@ import br.ufsc.inf.leobr.cliente.Jogada;
 
 public enum NumCarta implements Jogada{
 	 
-	   AS(1,"1"),
+	   AS(1,"AS"),
 	
 	   DOIS(2,"2"),
 	

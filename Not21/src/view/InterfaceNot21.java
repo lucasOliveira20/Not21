@@ -26,19 +26,24 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import controller.Not21Control;
 import controller.Not21ViewControl;
 import model.Carta;
-import model.JogadaN21;
 import model.Jogador;
 import model.Mesa;
 import net.AtorNetGames;
+import net.Estado;
 
 public class InterfaceNot21 extends JFrame {
 
-	private static boolean JOGO_EM_REDE = false;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5973627086574334341L;
 
 	AtorNetGames atorRede;
 	Mesa mesa;
+	private Not21Control trol;
 	private Not21ViewControl controle;
 	private String nome = "";
 	private CardLayout thisLayout;
@@ -55,7 +60,12 @@ public class InterfaceNot21 extends JFrame {
 	private JLabel lblC3J2;
 	private JLabel lblJogador;
 	private JLabel lblJogador_1;
-
+	private JLabel lblIniciar;
+	private JLabel btnReiniciar;
+	private JPanel panel;
+	private JPanel panel_1;
+	private JLabel lblConectar;
+	
 	public final int INFORMACAO = INFORMATION_MESSAGE;
 	public final String TITULO_JANELA = "NOT21";
 
@@ -72,6 +82,7 @@ public class InterfaceNot21 extends JFrame {
 		super();
 
 		this.controle = controle;
+		getContentPane().setLayout(thisLayout);
 		// atorRede = new AtorNetGames(controle, this);
 		mesa = new Mesa();
 
@@ -84,7 +95,7 @@ public class InterfaceNot21 extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel btnReiniciar = new JLabel("Reiniciar");
+		btnReiniciar = new JLabel("Reiniciar");
 		btnReiniciar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -117,7 +128,7 @@ public class InterfaceNot21 extends JFrame {
 		label.setBounds(549, 541, 183, 109);
 		contentPane.add(label);
 
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBackground(new Color(34, 139, 34));
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel.setBounds(10, 11, 431, 360);
@@ -166,7 +177,7 @@ public class InterfaceNot21 extends JFrame {
 		lblC1J1.setBounds(10, 117, 114, 156);
 		panel.add(lblC1J1);
 
-		JPanel panel_1 = new JPanel();
+		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(34, 139, 34));
 		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_1.setBounds(660, 11, 431, 360);
@@ -215,7 +226,7 @@ public class InterfaceNot21 extends JFrame {
 		lblC3J2.setBounds(295, 115, 114, 156);
 		panel_1.add(lblC3J2);
 
-		JLabel lblConectar = new JLabel("Conectar");
+		lblConectar = new JLabel("Conectar");
 		lblConectar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -232,16 +243,12 @@ public class InterfaceNot21 extends JFrame {
 		lblConectar.setBounds(391, 555, 74, 84);
 		contentPane.add(lblConectar);
 
-		JLabel lblIniciar = new JLabel("    Iniciar");
+		lblIniciar = new JLabel("    Iniciar");
 		lblIniciar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				int nrJogadores = 2;
-				iniciarPartidaRede(nrJogadores);
-				lblJogador.setText(jogador1.getNome());
-				lblJogador_1.setText(jogador2.getNome());
-				atualizaMaoJ1();
-				repaint();
+				controle.iniciarPartidaRede(nrJogadores);
 
 			}
 		});
@@ -264,7 +271,8 @@ public class InterfaceNot21 extends JFrame {
 		btnNovaMao.setBorder(null);
 		btnNovaMao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
+				String jogada= "pedir";
+				trol.procederJogada(jogada);
 			}
 		});
 		btnNovaMao.setBounds(451, 312, 199, 23);
@@ -277,11 +285,14 @@ public class InterfaceNot21 extends JFrame {
 		btnParar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				String jogada= "parar";
+				trol.procederJogada(jogada);
 			}
 		});
 		btnParar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
+				String jogada= "parar";
+				trol.procederJogada(jogada);
 			}
 		});
 		btnParar.setBounds(451, 348, 199, 23);
@@ -348,18 +359,18 @@ public class InterfaceNot21 extends JFrame {
 		label.setIcon(new ImageIcon("imagens/principal1.png"));
 		label_1.setIcon(new ImageIcon("imagens/principal.png"));
 
-		JButton btnRegas = new JButton("Regas");
-		btnRegas.setBorder(null);
-		btnRegas.setForeground(Color.WHITE);
-		btnRegas.addActionListener(new ActionListener() {
+		JButton btnRegras = new JButton("Regras");
+		btnRegras.setBorder(null);
+		btnRegras.setForeground(Color.WHITE);
+		btnRegras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mostraRegras();
 			}
 		});
-		btnRegas.setFont(new Font("Agency FB", Font.PLAIN, 18));
-		btnRegas.setBackground(new Color(34, 139, 34));
-		btnRegas.setBounds(10, 602, 74, 48);
-		contentPane.add(btnRegas);
+		btnRegras.setFont(new Font("Agency FB", Font.PLAIN, 18));
+		btnRegras.setBackground(new Color(34, 139, 34));
+		btnRegras.setBounds(10, 602, 74, 48);
+		contentPane.add(btnRegras);
 	}
 
 	public void habilitaDesabilitaBotoes() {
@@ -390,10 +401,6 @@ public class InterfaceNot21 extends JFrame {
 			this.controle.sair();
 	}
 
-	public void mostraTelaInicial() {
-		thisLayout.show(getContentPane(), "");
-	}
-
 	public void conectar() {
 		String nick = showInputDialog(this, "Digite seu nome: ", TITULO_JANELA, QUESTION_MESSAGE);
 		String servidor = "localhost";
@@ -410,9 +417,15 @@ public class InterfaceNot21 extends JFrame {
 		for (Jogador jogador : mesa.getJogadores()) {
 			criar(jogador);
 		}
+		atualizaMaoJ1();
+		atualizaMaoJ2();
+		
 		contentPane.repaint();
+		//panel.repaint();
+		//panel_1.repaint();
 		System.gc();
 		habilitaDesabilitaBotoes();
+		
 	}
 
 	public void criar(Jogador jogador) {
@@ -421,11 +434,13 @@ public class InterfaceNot21 extends JFrame {
 			this.jogador1 = jogador;
 			nome = jogador1.getNome();
 			lblJogador.setText(nome);
+			
 		}
 		if (jogador.getNumero() == 2) {
 			this.jogador2 = jogador;
 			nome = jogador2.getNome();
 			lblJogador_1.setText(nome);
+			
 		}
 		contentPane.repaint();
 	}
@@ -437,22 +452,22 @@ public class InterfaceNot21 extends JFrame {
 		Carta[] aux = new Carta[3];
 
 		aux = jogador1.getMan();
+		
 		temp[0] = aux[0].toString();
 		temp[1] = aux[1].toString();
 		temp[2] = aux[2].toString();
 
 		String C1 = temp[0];
-		lblC2J1.setIcon(new ImageIcon("imagens/%s.jpg", C1));
+		lblC1J1.setIcon(new ImageIcon("imagens/"+C1+".jpg"));
 		String C2 = temp[1];
-		lblC2J1.setIcon(new ImageIcon("imagens/%s.jpg", C2));
+		lblC2J1.setIcon(new ImageIcon("imagens/"+C2+".jpg"));
 		String C3 = temp[2];
-		lblC2J1.setIcon(new ImageIcon("imagens/%s.jpg", C3));
+		lblC3J1.setIcon(new ImageIcon("imagens/"+C3+".jpg"));
 		
 		contentPane.repaint();
 	}
 
 	public void atualizaMaoJ2() {
-		
 		String[] temp = new String[3];
 
 		Carta[] aux = new Carta[3];
@@ -463,15 +478,18 @@ public class InterfaceNot21 extends JFrame {
 		temp[2] = aux[2].toString();
 
 		String C1 = temp[0];
-		lblC1J2.setIcon(new ImageIcon("imagens/%s.jpg", C1));
+		lblC1J2.setIcon(new ImageIcon("imagens/"+C1+".jpg"));
 		String C2 = temp[1];
-		lblC2J2.setIcon(new ImageIcon("imagens/%s.jpg", C2));
+		lblC2J2.setIcon(new ImageIcon("imagens/"+C2+".jpg"));
 		String C3 = temp[2];
-		lblC3J2.setIcon(new ImageIcon("imagens/%s.jpg", C3));
+		lblC3J2.setIcon(new ImageIcon("imagens/"+C3+".jpg"));
+		
 		contentPane.repaint();
+		//panel.repaint();
+		//panel_1.repaint();
 	}
 
-	public void enviaJogadaRede(JogadaN21 jogada) {
+	public void enviaJogadaRede(Estado jogada) {
 		this.controle.enviaJogadaRede(jogada);
 	}
 
@@ -493,18 +511,24 @@ public class InterfaceNot21 extends JFrame {
 		mostraMensagem(regras);
 	}
 
-	public void pegarCartaAction() {
-		if (JOGO_EM_REDE)
-			enviaJogadaRede(JogadaN21.PEDIR);
-
-		this.controle.procederLance(JogadaN21.PEDIR);
-	}
-
-	public void passarAVezAction() {
-		if (JOGO_EM_REDE)
-			enviaJogadaRede(JogadaN21.PARAR);
-
-		this.controle.procederLance(JogadaN21.PARAR);
-	}
+//public void pegarCartaAction() {
+//	if (JOGO_EM_REDE
+//			
+//}
+	
+	
+//	public void pegarCartaAction() {
+//		if (JOGO_EM_REDE)
+//			enviaJogadaRede(JogadaN21.PEDIR);
+//
+//		this.controle.procederLance(JogadaN21.PEDIR);
+//	}
+//
+//	public void passarAVezAction() {
+//		if (JOGO_EM_REDE)
+//			enviaJogadaRede(JogadaN21.PARAR);
+//
+//		this.controle.procederLance(JogadaN21.PARAR);
+//	}
 
 }

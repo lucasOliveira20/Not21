@@ -15,7 +15,7 @@ public class Jogador implements Jogada{
 
 	protected Mao mao;
 
-	protected Mesa mesa;
+	/*protected Mesa mesa;*/
 	
 	protected int nRodads;
 	
@@ -23,6 +23,8 @@ public class Jogador implements Jogada{
 	
 	protected boolean parado = false;
 
+	protected boolean comeca =false;
+	
 	public int getnRodads() {
 		return nRodads;
 	}
@@ -31,25 +33,27 @@ public class Jogador implements Jogada{
 		this.nRodads = nRodads;
 	}
 
-	public Jogador(String nome, int numero, Mesa mesa) {
+	/*public Jogador(String nome, int numero, Mesa mesa) {
 		this.nome = nome;
 		this.numero = numero;
 		this.mesa = mesa;
 		this.mao = new Mao();
 		this.nRodads = 0;
 		this.pediu = 0;
+	}*/
+	public Jogador(String nome, int numero) {
+		this.nome = nome;
+		this.numero = numero;
+		this.mao = new Mao();
+		this.nRodads = 0;
+		this.pediu = 0;
 	}
-
 	
 	public Carta[] getMan() {
 		return mao.getManeta();
 	}
 	
-	public String getCartaDoBaralho() {
-		Carta carta = this.mesa.getBaralho().getCartaTopo();
-		this.mao.adicionaCarta(carta);
-		return String.format("%s pega a carta %s!", this.nome, carta);
-	}
+	
 
 	public void limparMao() {
 		this.mao.limpar();
